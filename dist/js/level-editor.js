@@ -314,7 +314,7 @@ const Tsilang = function (options) {
 		create: tts.create,
 		removeCategory: removeCategory,
 		createCategory: createCategory,
-		download: async (id, data) => {
+		download: async (id, data, callback) => {
 			console.log(data);
 
 			const type = [{
@@ -350,7 +350,7 @@ const Tsilang = function (options) {
 									data = parseToJson(filter);
 									break;
 							}
-							download('Soal.' + t.extesion, data);
+							callback(data);
 						}
 					});
 				}

@@ -54,10 +54,16 @@
                         offsetHeight: this.offsetHeight,
                         offsetWidth: this.offsetWidth
                     }
-                    if (constantX(x, rect) && constantY(y, rect)) {
-                        $(value.rectObject)
-                            .css('left', ($(this).offset().left + $(this).outerWidth() + 4))
-                            .css('top', $(this).offset().top).visible();
+                    if (constantX(x, rect) && constantY(y, rect) && $(this).is($(e.target))) {
+                        if (value.positionCurcor) {
+                            $(value.rectObject)
+                                .css('left', (x + 4))
+                                .css('top', y).visible();
+                        } else {
+                            $(value.rectObject)
+                                .css('left', ($(this).offset().left + $(this).outerWidth() + 4))
+                                .css('top', $(this).offset().top).visible();
+                        }
                         if (typeof value.show === "function") {
                             value.show.apply(value.rectObject, $(this));
                         }
@@ -179,6 +185,7 @@
             rectObject: this,
             target: (typeof params.target === "undefined") ? null : params.target,
             show: (typeof params.show === "function") ? params.show : null,
+            positionCurcor: (typeof params.positionCurcor === "boolean") ? params.positionCurcor : false,
             noHideKeyKode: 2,
         });
 
@@ -211,13 +218,13 @@
         });
         const header = $(this).find('.header');
         if (isMove) {
-            header.css('cursor', 'move');
             var isDown = false;
             var positionStart = {
                 x: 0,
                 y: 0
             }
             header.mousedown(function (e) {
+                header.css('cursor', 'move');
                 isDown = true;
                 root.css('z-index', (parseInt(root.css('z-index'))+2));
                 positionStart = {
@@ -239,6 +246,7 @@
             });
             $(document).mouseup(function () {
                 if (isDown) {
+                    header.css('cursor', 'default');
                     isDown = false;
                     root.css('z-index', (parseInt()-1));
                 }
@@ -251,5 +259,7 @@
         if (typeof fn === "function") {
             fn.apply(this);
         }
+
+        return $(this);
     }
 })(jQuery);

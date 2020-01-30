@@ -268,6 +268,8 @@ ul.__tts_context-menu > li:hover {
     position: fixed;
     min-width: 280px;
     min-height: 140px;
+    max-height: 100vh;
+    max-width: 90%;
     background-color: #ffffff;
     left: calc((100% / 2) - (280px/2));
     top: calc((100vh / 2) - (140px/2));
@@ -282,6 +284,7 @@ ul.__tts_context-menu > li:hover {
     width: 100%;
     min-height: 140px;
     padding: 1rem 0.8rem;
+    overflow-y: auto;
 }
 
 .__tts_dialog > .header {
@@ -303,7 +306,6 @@ ul.__tts_context-menu > li:hover {
     margin-left: auto;
     margin-right: auto;
     align-self: center;
-    cursor: default;
 }
 
 .__tts_dialog > .header > .buttons-right {

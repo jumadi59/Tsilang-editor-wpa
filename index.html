@@ -10,12 +10,14 @@
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <link href="dist/css/prism.css" rel="stylesheet" />
     <link href="dist/css/font-awesome.min.css" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="dist/css/materialize.min.css" media="screen,projection" />
 
     <link type="text/css" rel="stylesheet" href="dist/css/style-flat.css" />
     <link type="text/css" rel="stylesheet" href="dist/css/tsilang-editor.css" />
+    <script type="text/javascript" src="dist/js/prism.js"></script>
 
 </head>
 
@@ -154,6 +156,31 @@
         </div>
     </form>
 
+    <div id="dialog-preview-code" class="__tts_dialog">
+        <div class="header">
+            <span class="title">Preview</span>
+            <div class="buttons-right">
+                <i class="dialog-close icon-flat i-close small"></i>
+            </div>
+        </div>
+        <div class="content">
+            <pre><code class="language-"></code></pre>
+        </div>
+        <div class="footer"></div>
+    </div>
+
+    <div id="dialog-import" class="__tts_dialog">
+        <div class="header">
+            <span class="title">Import</span>
+            <div class="buttons-right">
+                <i class="dialog-close icon-flat i-close small"></i>
+            </div>
+        </div>
+        <div class="content">
+        </div>
+        <div class="footer"></div>
+    </div>
+
     <div class="__tts_menu right">
         <div class="switch"></div>
 
@@ -167,14 +194,32 @@
         <li id="delete">Delete</li>
     </ul>
 
+    <ul id="menu-gategory" class="__tts_context-menu">
+        <li id="edit">Tambah Category</li>
+        <li id="delete">Export</li>
+        <li id="delete">Import</li>
+    </ul>
+
     <script type="text/javascript" src="dist/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="dist/js/materialize.min.js"></script>
     <script type="text/javascript" src="dist/js/idb.js"></script>
+    
     <script type="text/javascript" src="dist/js/database.js"></script>
     <script type="text/javascript" src="dist/js/script.js"></script>
     <script type="text/javascript" src="dist/js/tts-editor.js"></script>
     <script type="text/javascript" src="dist/js/level-editor.js"></script>
     <script>
+        Prism.plugins.NormalizeWhitespace.setDefaults({
+	'remove-trailing': true,
+	'remove-indent': true,
+	'left-trim': true,
+	'right-trim': true,
+	/*'break-lines': 80,
+	'indent': 2,
+	'remove-initial-line-feed': false,
+	'tabs-to-spaces': 4,
+	'spaces-to-tabs': 4*/
+});
         $(document).ready(function () {
 
             var tsilang = new Tsilang({});
@@ -200,7 +245,15 @@
                 });
             });
 
-            $('.__tts_context-menu').contextMenu({
+            $('#menu-gategory').contextMenu({
+                target: '.tabs',
+                positionCurcor: true,
+                show: function (target) {
+                }
+            }).initComponent(function () {
+            });
+
+            $('#menu-level').contextMenu({
                 target: '.grid > .button',
                 show: function (target) {
                     var id = $(target).find('span').data('id');
@@ -223,7 +276,7 @@
                         });
                     }
                 });
-            })
+            });
 
             $('#dialog-download').dialog({
                 isMove: true,
@@ -236,10 +289,22 @@
                         tsilang.download(id, {
                             package_name: $this.find('#package-name').val(),
                             type: $this.find('input:checked').val()
+                        }, function (data) {
+                            $('code').html(data);
+                            $('#dialog-preview-code').visible();
                         });
                     }
                 });
             });
+
+            $('#dialog-preview-code').dialog({
+                isMove: true,
+                isAutoClose: false,
+                show: function (params) {
+                    Prism.highlightAll();
+                }
+            }).initComponent(function () {
+            }).visible()
 
             $('#dialog-category-ops').dialog({
                 isMove: true,
