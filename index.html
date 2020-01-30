@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Teka-Teki Silang Editor - Cumacoding.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link href="dist/css/font-awesome.min.css" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="dist/css/materialize.min.css" media="screen,projection" />
+
+    <link type="text/css" rel="stylesheet" href="dist/css/style-flat.css" />
+    <link type="text/css" rel="stylesheet" href="dist/css/tsilang-editor.css" />
+
+</head>
+
+<body>
+    <!--Header-->
+    <nav class="z-depth-0 green nav-extended">
+        <div class="container nav-wrapper">
+            <a href="" class="brand-logo">TSilang Editor</a>
+            <ul id="nav-mobile" class="right">
+                <li><a href="https://cumacoding.com" class="white-text">Home</a></li>
+                <li><a href="#!" onclick="$('#dialog-about').visible()" class="white-text">About</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main style="padding-left: 0px; padding-top: 5px;">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 l6">
+                    <div class="row __tts_tabs_levels">
+                        <div class="col s12">
+                            <ul class="tabs"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s12 l5">
+                    <table class="__tts-grid" cellspacing="0" cellpadding="0"></table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="dialog-about" class="__tts_dialog">
+        <div class="header">
+            <span class="title">About</span>
+            <div class="buttons-right">
+                <i class="dialog-close icon-flat i-close small"></i>
+            </div>
+        </div>
+        <div class="content">
+            <img src="dist/css/image/logo.png" width="120" height="auto" class="center-block" />
+            <div class="center">
+                <h6 style="margin: 0px; line-height: 80%;">Teka-Teki Silang Editor</h6>
+                <span style="font-size: 13px;">V 0.0.1</span>
+            </div>
+            <div class="center">
+                <a class="button icon mini black" href="https://github.com/jum4di59"><i class="fa fa-github"></i></a>
+                <a class="button icon mini primary" href="https://linkedin.com"><i class="fa fa-linkedin"></i></a>
+                <a class="button icon mini red"><i class="fa fa-google-plus"></i></a>
+            </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+
+    <div id="dialog-create-category" class="__tts_dialog">
+        <div class="header">
+            <span class="title">Create Category</span>
+            <div class="buttons-right">
+                <i class="dialog-close icon-flat i-close small"></i>
+            </div>
+        </div>
+        <div class="content">
+            <div class="">
+                <div class="input-field">
+                    <input id="row-count" type="number" class="validate">
+                    <label for="row-count">Row count</label>
+                </div>
+                <div class="input-field">
+                    <input id="column-count" type="number" class="validate">
+                    <label for="column-count">Column count</label>
+                </div>
+            </div>
+        </div>
+        <div class="footer right-align">
+            <a id="create" class="button accent mini">Create</a>
+            <a class="dialog-close button red mini">Close</a>
+        </div>
+    </div>
+
+    <div id="dialog-level-ops" class="__tts_dialog">
+        <div class="header">
+            <span class="title">Options Level</span>
+            <div class="buttons-right">
+                <i class="dialog-close icon-flat i-close small"></i>
+            </div>
+        </div>
+        <div class="content" style="display: grid;">
+            <div class="center" style="align-self: center;">
+                <a id="edit" class="button primary large" style="width: 100px;">Edit</a>
+                <a id="delete" class="button red large" style="width: 100px;">Delete</a>
+            </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+
+    <div id="dialog-category-ops" class="__tts_dialog">
+        <div class="header">
+            <span class="title">Options Category</span>
+            <div class="buttons-right">
+                <i class="dialog-close icon-flat i-close small"></i>
+            </div>
+        </div>
+        <div class="content" style="display: grid;">
+            <div class="center" style="align-self: center;">
+                <a id="download" class="button primary large" style="width: 130px;">Download</a>
+                <a id="delete" class="button red large" style="width: 130px;">Delete</a>
+            </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+
+    <form id="dialog-download" class="__tts_dialog">
+        <div class="header">
+            <span class="title">Download</span>
+            <div class="buttons-right">
+                <i class="dialog-close icon-flat i-close small"></i>
+            </div>
+        </div>
+        <div class="content">
+            <span>Download file :</span>
+            <div style="display: flex;flex-direction: column; margin-left: 10px;">
+                <input id="package-name" value="com.jumadi.tekatekisilang" type="text" class="validate"
+                    name="package_name">
+                <label for="package-name">Package Name</label>
+                <input value="kotlin" class="with-gap" type="radio" id="kotlin" name="type" />
+                <label for="kotlin">Array Kotlin</label>
+                <input value="java" class="with-gap" type="radio" id="java" name="type" />
+                <label for="java">Array Java</label>
+                <input value="json" class="with-gap" type="radio" id="json" name="type" />
+                <label for="json">Array Json</label>
+            </div>
+        </div>
+        <div class="footer right-align">
+            <a id="download" class="button accent mini">Download</a>
+            <a class="dialog-close button red mini">Close</a>
+        </div>
+    </form>
+
+    <div class="__tts_menu right">
+        <div class="switch"></div>
+
+        <div class="button icon small">
+            <i class="icon-flat i-cog"></i>
+        </div>
+    </div>
+
+    <ul id="menu-level" class="__tts_context-menu">
+        <li id="edit">Edit</li>
+        <li id="delete">Delete</li>
+    </ul>
+
+    <script type="text/javascript" src="dist/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="dist/js/materialize.min.js"></script>
+    <script type="text/javascript" src="dist/js/idb.js"></script>
+    <script type="text/javascript" src="dist/js/database.js"></script>
+    <script type="text/javascript" src="dist/js/script.js"></script>
+    <script type="text/javascript" src="dist/js/tts-editor.js"></script>
+    <script type="text/javascript" src="dist/js/level-editor.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            var tsilang = new Tsilang({});
+            tsilang.init();
+
+            $('.button').animClick();
+            $('.__tts_menu.right').menu();
+            $('#dialog-about').dialog();
+
+            $('#dialog-create-category').dialog({
+                isMove: true,
+                isAutoClose: false
+            }).initComponent(function () {
+                $(this).find('#create').animClick(() => {
+                    let rowcount = $(this).find('#row-count').val();
+                    let columncount = $(this).find('#column-count').val();
+                    if (columncount != '' && rowcount != '') {
+                        tsilang.createCategory(parseInt(columncount), parseInt(columncount),
+                            () => {
+                                $(this).gone();
+                            });
+                    }
+                });
+            });
+
+            $('.__tts_context-menu').contextMenu({
+                target: '.grid > .button',
+                show: function (target) {
+                    var id = $(target).find('span').data('id');
+                    if (typeof id === "number") {
+                        $(this).attr('data-id', id);
+                    }
+                }
+            }).initComponent(function () {
+                $(this).find('#edit').click(() => {
+                    let id = $(this).data('id');
+                    if (typeof id === "number") {
+                        window.location = 'tsilang-editor.html?id=' + id;
+                    }
+                });
+                $(this).find('#delete').click(() => {
+                    let id = $(this).data('id');
+                    if (typeof id === "number") {
+                        tsilang.remove(parseInt(id), () => {
+                            $(this).gone();
+                        });
+                    }
+                });
+            })
+
+            $('#dialog-download').dialog({
+                isMove: true,
+                isAutoClose: false
+            }).initComponent(function () {
+                let $this = $(this);
+                $(this).find('#download').animClick(function () {
+                    let id = $this.data('id');
+                    if (typeof id === "number") {
+                        tsilang.download(id, {
+                            package_name: $this.find('#package-name').val(),
+                            type: $this.find('input:checked').val()
+                        });
+                    }
+                });
+            });
+
+            $('#dialog-category-ops').dialog({
+                isMove: true,
+                isAutoClose: false
+            }).initComponent(function () {
+                $(this).find('#download').animClick(() => {
+                    let id = $(this).data('id');
+                    if (typeof id === "number") {
+                        $('#dialog-download').attr('data-id', id).visible();
+                    }
+                });
+
+                $(this).find('#delete').animClick(() => {
+                    let id = $(this).data('id');
+                    if (typeof id === "number") {
+                        tsilang.removeCategory(parseInt(id), () => {
+                            $(this).gone();
+                        });
+                    }
+                });
+            });
+
+            $('#dialog-level-ops').dialog({
+                isMove: true,
+                show: function () {
+                    let level = $(this).data('level');
+                    $(this).find('span.title').text('Options Level ' + level);
+                }
+            }).initComponent(function () {
+                $(this).find('#edit').animClick(() => {
+                    let id = $(this).data('id');
+                    if (typeof id === "number") {
+                        window.location = 'tsilang-editor.html?id=' + id;
+                    }
+                });
+                $(this).find('#delete').animClick(() => {
+                    let id = $(this).data('id');
+                    if (typeof id === "number") {
+                        tsilang.remove(parseInt(id), () => {
+                            $(this).gone();
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

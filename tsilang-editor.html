@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title>Teka-Teki Silang Editor - Cumacoding.com</title>
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link href="dist/css/font-awesome.min.css" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="dist/css/materialize.min.css" media="screen,projection" />
+
+    <link type="text/css" rel="stylesheet" href="dist/css/style-flat.css" />
+    <link type="text/css" rel="stylesheet" href="dist/css/tsilang-editor.css" />
+
+</head>
+
+<body>
+
+    <!--Header-->
+    <nav class="z-depth-0 green nav-extended">
+        <div class="container nav-wrapper">
+            <a href="" class="brand-logo">TSilang Editor</a>
+            <ul id="nav-mobile" class="right">
+                <li><a href="https://cumacoding.com" class="white-text hide-on-med-and-down">Home</a></li>
+                <li><a href="#!" onclick="$('#dialog-about').visible()"
+                        class="white-text hide-on-med-and-down">About</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main style="padding-left: 0px; padding-top: 5px;">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m6 l4">
+                    <table class="__table-tts-questions">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Question</th>
+                                <th>Answer</th>
+                                <th>Ops</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col s12 m6 l5">
+                    <table class="__tts-grid" cellspacing="0" cellpadding="0"></table>
+                </div>
+
+                <div class="col s12 m12 l3">
+                    <div class="row">
+                        <p class="col s6">
+                            <input value="horizontal" name="orientation" class="with-gap" type="radio"
+                                id="horizontal" />
+                            <label for="horizontal">Horizontal</label>
+                        </p>
+                        <p class="col s6">
+                            <input value="vertical" name="orientation" class="with-gap" type="radio" id="vertical" />
+                            <label for="vertical">Vertical</label>
+                        </p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s6 input-field">
+                            <input id="row" type="number" class="validate">
+                            <label for="row">Row</label>
+                        </div>
+                        <div class="col s6 input-field">
+                            <input id="column" type="number" class="validate">
+                            <label for="column">Column</label>
+                        </div>
+                    </div>
+
+                    <div class="input-field">
+                        <input id="answer" type="text" class="validate">
+                        <label for="answer">Answer</label>
+                    </div>
+
+                    <div class="input-field">
+                        <input id="question" type="text" class="validate">
+                        <label for="question">Question</label>
+                    </div>
+                    <a class="button primary modal-trigger" id="done">Selesai</a>
+                    <a class="button accent" id="save">Simpan</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="dialog-about" class="__tts_dialog">
+        <div class="header">
+            <span class="title">About</span>
+            <div class="buttons-right">
+                <i class="dialog-close icon-flat i-close small"></i>
+            </div>
+        </div>
+        <div class="content">
+            <img src="dist/css/image/logo.png" width="120" height="auto" class="center-block" />
+            <div class="center">
+                <h6 style="margin: 0px; line-height: 80%;">Teka-Teki Silang Editor</h6>
+                <span style="font-size: 13px;">V 0.0.1</span>
+            </div>
+            <div class="center">
+                <a class="button icon mini black" href="https://github.com/jum4di59"><i class="fa fa-github"></i></a>
+                <a class="button icon mini primary" href="https://linkedin.com"><i class="fa fa-linkedin"></i></a>
+                <a class="button icon mini red"><i class="fa fa-google-plus"></i></a>
+            </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+
+    <div id="dialog-categories" class="__tts_dialog">
+        <div class="header">
+            <span class="title">Categories</span>
+            <div class="buttons-right">
+                <i class="dialog-close icon-flat i-close small"></i>
+            </div>
+        </div>
+        <div class="content" style="padding: 0px;">
+            <div class="row __tts_tabs_levels" style="width: 580px; height: 450px; border-radius: 0px;">
+                <div class="col s12">
+                    <ul class="tabs"></ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+
+    <div class="__tts_menu right">
+        <div class="switch"></div>
+
+        <div class="button icon small" onClick="$('#dialog-categories').visible();">
+            <i class="icon-flat i-grid"></i>
+        </div>
+
+        <div class="button icon small">
+            <i class="icon-flat i-cog"></i>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="dist/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="dist/js/materialize.min.js"></script>
+    <script type="text/javascript" src="dist/js/idb.js"></script>
+    <script type="text/javascript" src="dist/js/database.js"></script>
+    <script type="text/javascript" src="dist/js/script.js"></script>
+    <script type="text/javascript" src="dist/js/tts-editor.js"></script>
+    <script type="text/javascript" src="dist/js/level-editor.js"></script>
+    <script>
+        $(document).ready(function () {
+            var urlParams = new URLSearchParams(window.location.search);
+            const id = parseInt(urlParams.get('id'));
+            const column = parseInt(urlParams.get('column'));
+            const row = parseInt(urlParams.get('row'));
+
+            var tsilang = new Tsilang({});
+            tsilang.init();
+            if (id) {
+                tsilang.load(id);
+            } else if (column && row) {
+                tsilang.create(column, row);
+            }
+
+            $('#dialog-categories').dialog({
+                isMove: true,
+                isAutoClose: false,
+                show: function () {
+                    if (id) {
+                        tsilang.setFocus(id);
+                    }
+                }
+            });
+            $('#dialog-about').dialog();
+            $('.__tts_menu.right').menu({});
+            $('.button').animClick();
+        });
+    </script>
+</body>
+
+</html>
