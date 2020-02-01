@@ -425,3 +425,41 @@ ul.__tts_context-menu > li:hover {
     margin: 3px 4px;
 }
 
+.alert {
+    position: absolute;
+    min-width: 100px;
+    max-width: calc(100% / 4);
+    min-height: 50px;
+    background-color: #111111c0;
+    bottom: 25px;
+    left: 0px;
+    z-index: 1000;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    color: #ffffff;
+    font-size: 16px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    padding: 8px;
+}
+
+.alert.top {
+    top: 25px;
+}
+.toast.right {
+    right: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.alert .span {
+    display: block;
+}
+
+.alert .loading {
+
+}
+

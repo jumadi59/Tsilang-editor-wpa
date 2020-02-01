@@ -54,19 +54,33 @@
         var isShow = false;
 
         filter.forEach((value) => {
-            let y = e.clientY + $(window).scrollTop();
-            let x = e.clientX + $(window).scrollLeft();
+            var y = e.clientY + $(window).scrollTop();
+            var x = e.clientX + $(window).scrollLeft();
             if (value.target) {
                 $(value.target).each(function () {
                     if (constantRect(e.target, this)) {
+
                         if (value.positionCurcor) {
+                            if ((x + $(value.rectObject).outerWidth() + 4) > window.innerWidth) {
+                                x = x - $(value.rectObject).outerWidth() - 4;
+                            }
+                            if (y + $(value.rectObject).outerHeight() > window.innerHeight) {
+                                y = y - $(value.rectObject).outerHeight();
+                            }
+                            
                             $(value.rectObject)
-                                .css('left', (x + 4))
+                                .css('left', x)
                                 .css('top', y).visible();
                         } else {
-                            $(value.rectObject)
-                                .css('left', ($(this).offset().left + $(this).outerWidth() + 4))
-                                .css('top', $(this).offset().top).visible();
+                            var left = ($(this).offset().left + $(this).outerWidth() + 4);
+                            var top = $(this).offset().top;
+                            if (left + $(value.rectObject).outerWidth() > window.innerWidth) {
+                                left = left - $(value.rectObject).outerWidth();
+                            }
+                            if ((top + $(value.rectObject).outerHeight()) >window.innerHeight) {
+                                top = top - $(value.rectObject).outerHeight();
+                            }
+                            $(value.rectObject).css('left', left).css('top', top).visible();
                         }
                         if (typeof value.show === "function") {
                             value.show.apply(value.rectObject, $(this));
@@ -223,22 +237,24 @@
             root.gone();
         });
         const header = $(this).find('.header');
+        header.mousedown(function (e) {
+            isDown = true;
+            if (isMove) {
+                header.css('cursor', 'move');
+            }
+            root.css('z-index', (parseInt(root.css('z-index')) + 2));
+            positionStart = {
+                x: e.clientX,
+                y: e.clientY
+            }
+
+        });
         if (isMove) {
             var isDown = false;
             var positionStart = {
                 x: 0,
                 y: 0
             }
-            header.mousedown(function (e) {
-                header.css('cursor', 'move');
-                isDown = true;
-                root.css('z-index', (parseInt(root.css('z-index')) + 2));
-                positionStart = {
-                    x: e.clientX,
-                    y: e.clientY
-                }
-
-            });
             header.mousemove(function (e) {
                 if (isDown) {
                     let left = root.offset().left + (e.clientX - positionStart.x);
@@ -269,6 +285,14 @@
         return $(this);
     }
 })(jQuery);
+
+const Alert = {
+    message: function(message) {
+        var $toastContent = $('<span>'+message+'</span>')
+        .add($('<button class="btn-flat toast-action red-text" onClick="Materialize.Toast.removeAll();">Remove</button>'));
+        Materialize.toast($toastContent, 6000);
+    }
+}
 
 var Base64 = {
     // private property

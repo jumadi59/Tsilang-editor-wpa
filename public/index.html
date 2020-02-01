@@ -7,17 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Teka-Teki Silang Editor - Cumacoding.com</title>
 
-  <link rel="apple-touch-icon" sizes="72x72" href="dist/icons/icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="96x96" href="dist/icons/icon-96x96.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="dist/icons/icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="dist/icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="dist/icons/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="dist/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="dist/icons/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="dist/icons/icon-152x152.png">
 
-  <link rel="icon" type="image/png" href="dist/icons/icon-72x72.png" sizes="72x72">
-  <link rel="icon" type="image/png" href="dist/icons/icon-96x96.png" sizes="96x96">
-  <link rel="icon" type="image/png" href="dist/icons/icon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="dist/icons/icon-72x72.png" sizes="72x72">
+    <link rel="icon" type="image/png" href="dist/icons/icon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="dist/icons/icon-192x192.png" sizes="192x192">
 
-  <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#4caf50" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#4caf50" />
 
     <!-- update the version number as needed 
     <script defer src="/__/firebase/7.7.0/firebase-app.js"></script>
@@ -51,7 +51,7 @@
             </ul>
         </div>
     </nav>
-    <main style="padding-left: 0px; padding-top: 5px;">
+    <main style="padding-left: 0px;" id="app">
         <div class="container">
             <div class="row">
                 <div class="col s12 l6">
@@ -77,15 +77,19 @@
             </div>
         </div>
         <div class="content">
-            <img src="dist/icons/icon-512x512.png" width="120" style="padding: 5px;" height="auto" class="center-block" />
+            <img src="dist/icons/icon-512x512.png" width="120" style="padding: 10px;" height="auto"
+                class="center-block" />
             <div class="center">
                 <h6 style="margin: 0px; line-height: 80%;">Teka-Teki Silang Editor</h6>
                 <span style="font-size: 13px;">V 0.0.1</span>
             </div>
             <div class="center">
-                <a class="button icon mini black" target="_blank" href="https://github.com/jum4di59"><i class="fa fa-github"></i></a>
-                <a class="button icon mini primary" target="_blank" href="https://linkedin.com/jum4di59"><i class="fa fa-linkedin"></i></a>
-                <a class="button icon mini red" target="_blnk" href="mailto:jum4di59@gmail.com"><i class="fa fa-envelope"></i></a>
+                <a class="button icon mini black" target="_blank" href="https://github.com/jum4di59"><i
+                        class="fa fa-github"></i></a>
+                <a class="button icon mini primary" target="_blank" href="https://linkedin.com/jum4di59"><i
+                        class="fa fa-linkedin"></i></a>
+                <a class="button icon mini red" target="_blnk" href="mailto:jum4di59@gmail.com"><i
+                        class="fa fa-envelope"></i></a>
             </div>
         </div>
         <div class="footer"></div>
@@ -202,15 +206,8 @@
         <li id="export">Export</li>
         <li id="import">Import</li>
     </ul>
-     <!--<div class="__tts_menu right">
-        <div class="switch"></div>
 
-        <div class="button icon small">
-            <i class="icon-flat i-cog"></i>
-        </div>
-    </div>-->
-
-    <!--<script src="init.js"></script>-->
+    <script src="init.js"></script>
     <script type="text/javascript" src="dist/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="dist/js/materialize.min.js"></script>
     <script type="text/javascript" src="dist/js/idb.js"></script>
@@ -240,13 +237,14 @@
                     if (columncount != '' && rowcount != '') {
                         tsilang.createCategory(parseInt(columncount), parseInt(columncount),
                             () => {
+                                Alert.message('Berhasil membuat category!');
                                 $(this).gone();
                             });
                     }
                 });
             });
 
-            let initMenuCategory = function() {
+            let initMenuCategory = function () {
                 let $this = $(this);
                 $(this).find('#add').click(function () {
                     $this.gone();
@@ -271,6 +269,7 @@
                     if (typeof id === "number") {
                         tsilang.removeCategory(parseInt(id), () => {
                             $(this).gone();
+                            Alert.message('Berhasil di menghapus category!');
                         });
                     }
                 });
@@ -296,7 +295,6 @@
                 }
             }).initComponent(initMenuCategory);
 
-
             $('#menu-level').contextMenu({
                 target: '.grid > .button',
                 show: function (target) {
@@ -317,6 +315,7 @@
                     let id = $this.data('id');
                     if (typeof id === "number") {
                         tsilang.remove(parseInt(id), () => {
+                            Alert.message('Berhasil di menghapus level!');
                             $this.gone();
                         });
                     }
@@ -364,7 +363,7 @@
 
                 $(this).find('#export').animClick(function () {
                     let id = parseInt($this.attr('data-id'));
-                    
+
                     if (typeof id === "number") {
                         tsilang.download(id, {
                             package_name: $this.find('#package-name').val(),
@@ -381,13 +380,17 @@
                 isAutoClose: false
             }).initComponent(function () {
                 let $this = $(this);
+
                 function changeFile(params) {
                     if (/\.(java|json|kt|dt)$/i.test(this.files[0].name)) {
                         let type = this.files[0].name;
                         if (this.files && this.files[0]) {
                             var reader = new FileReader();
                             reader.onload = function (e) {
-                                tsilang.import(e.target.result, type , () => $this.gone());
+                                tsilang.import(e.target.result, type, () => {
+                                    Alert.message('Berhasil file di import!');
+                                    $this.gone();
+                                });
                             };
                             reader.readAsText(this.files[0]);
                         }
@@ -406,27 +409,27 @@
         });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-          // // The Firebase SDK is initialized and available here!
-          //
-          // firebase.auth().onAuthStateChanged(user => { });
-          // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-          // firebase.messaging().requestPermission().then(() => { });
-          // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-          //
-          // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-  
-          //try {
-          //  let app = firebase.app();
-          //  let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          //  document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-          //} catch (e) {
-          //  console.error(e);
-          //  document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-          //}
+        document.addEventListener('DOMContentLoaded', function () {
+            // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+            // // The Firebase SDK is initialized and available here!
+            //
+            // firebase.auth().onAuthStateChanged(user => { });
+            // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+            // firebase.messaging().requestPermission().then(() => { });
+            // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+            //
+            // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+            //try {
+            //  let app = firebase.app();
+            //  let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+            //  document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+            //} catch (e) {
+            //  console.error(e);
+            //  document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+            //}
         });
-      </script>
+    </script>
 </body>
 
 </html>

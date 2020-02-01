@@ -287,10 +287,10 @@ const TtsEditor = function(options) {
             var question = this.questions[id-1];
             if (this.editIndex != -1) {
                 var q = this.questions[this.editIndex];
-                this.resetForm();
                 this.setAnswer(q['answer'].split(''), q['answer'].split(''));
             }
             
+            this.resetForm();
             this.resetState();
             this.answer= question['answer'];
             this.question = question['question'];

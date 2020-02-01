@@ -13,9 +13,10 @@ const Tsilang = function (options) {
 	}
 
 	function saved(result) {
-		dbLevel.find(result, (value) => dbLevel.update(result, value.id),
+		dbLevel.find(result, (value) => dbLevel.update(result, value.id).then(() => 
+		Alert.message('Berhasil di simpan!')),
 			() => dbLevel.insert(result).then(() => {
-				window.location = "";
+				Alert.message('Berhasil di simpan!');
 			}));
 	}
 
