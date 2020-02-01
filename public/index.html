@@ -1,65 +1,432 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
 
-    <!-- update the version number as needed -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Teka-Teki Silang Editor - Cumacoding.com</title>
+
+  <link rel="apple-touch-icon" sizes="72x72" href="dist/icons/icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="96x96" href="dist/icons/icon-96x96.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="dist/icons/icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="dist/icons/icon-152x152.png">
+
+  <link rel="icon" type="image/png" href="dist/icons/icon-72x72.png" sizes="72x72">
+  <link rel="icon" type="image/png" href="dist/icons/icon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="dist/icons/icon-192x192.png" sizes="192x192">
+
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#4caf50" />
+
+    <!-- update the version number as needed 
     <script defer src="/__/firebase/7.7.0/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
     <script defer src="/__/firebase/7.7.0/firebase-auth.js"></script>
     <script defer src="/__/firebase/7.7.0/firebase-database.js"></script>
     <script defer src="/__/firebase/7.7.0/firebase-messaging.js"></script>
     <script defer src="/__/firebase/7.7.0/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+    <script defer src="/__/firebase/init.js"></script>-->
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link href="dist/css/prism.css" rel="stylesheet" />
+    <link href="dist/css/font-awesome.min.css" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="dist/css/materialize.min.css" media="screen,projection" />
+
+    <link type="text/css" rel="stylesheet" href="dist/css/style-flat.css" />
+    <link type="text/css" rel="stylesheet" href="dist/css/tsilang-editor.css" />
+
+</head>
+
+<body>
+    <!--Header-->
+    <nav class="z-depth-0 green nav-extended">
+        <div class="container nav-wrapper">
+            <a href="" class="brand-logo">TSilang Editor</a>
+            <ul id="nav-mobile" class="right">
+                <li><a href="https://cumacoding.com" class="white-text">Home</a></li>
+                <li><a href="#!" onclick="$('#dialog-about').visible()" class="white-text">About</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main style="padding-left: 0px; padding-top: 5px;">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 l6">
+                    <div class="row __tts_tabs_levels">
+                        <div class="col s12">
+                            <ul class="tabs"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s12 l5">
+                    <table class="__tts-grid" cellspacing="0" cellpadding="0"></table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="dialog-about" class="__tts_dialog">
+        <div class="header">
+            <span class="title">About</span>
+            <div class="buttons-right">
+                <i class="dialog-close icon-flat i-close small"></i>
+            </div>
+        </div>
+        <div class="content">
+            <img src="dist/icons/icon-512x512.png" width="120" style="padding: 5px;" height="auto" class="center-block" />
+            <div class="center">
+                <h6 style="margin: 0px; line-height: 80%;">Teka-Teki Silang Editor</h6>
+                <span style="font-size: 13px;">V 0.0.1</span>
+            </div>
+            <div class="center">
+                <a class="button icon mini black" target="_blank" href="https://github.com/jum4di59"><i class="fa fa-github"></i></a>
+                <a class="button icon mini primary" target="_blank" href="https://linkedin.com/jum4di59"><i class="fa fa-linkedin"></i></a>
+                <a class="button icon mini red" target="_blnk" href="mailto:jum4di59@gmail.com"><i class="fa fa-envelope"></i></a>
+            </div>
+        </div>
+        <div class="footer"></div>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
 
+    <div id="dialog-create-category" class="__tts_dialog">
+        <div class="header">
+            <span class="title">Create Category</span>
+            <div class="buttons-right">
+                <i class="dialog-close icon-flat i-close small"></i>
+            </div>
+        </div>
+        <div class="content" style="display: flex;flex-direction: row;">
+            <div class="row" style="align-self: center;">
+                <div class="input-field col s6">
+                    <input id="row-count" type="number">
+                    <label for="row-count">Row Count</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="column-count" type="number">
+                    <label for="column-count">Column Count</label>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="right-align">
+                <div id="create" class="button accent mini">Create</div>
+                <div class="dialog-close button red mini">Cencel</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dialog-preview-code" class="__tts_dialog">
+        <div class="header">
+            <span class="title">Preview</span>
+            <div class="buttons-right">
+                <i class="dialog-close icon-flat i-close small"></i>
+            </div>
+        </div>
+        <div class="content">
+            <pre></pre>
+        </div>
+        <div class="footer"></div>
+    </div>
+
+    <div id="dialog-import" class="__tts_dialog">
+        <div class="header">
+            <span class="title">Import</span>
+            <div class="buttons-right">
+                <i class="dialog-close icon-flat i-close small"></i>
+            </div>
+        </div>
+        <div class="content" style="display: flex;flex-direction: row;">
+            <div class="file-field input-field" style="align-self: center;">
+                <div class="button primary normal" style="display: inline-block;float: left;">
+                    <span style="font-size: 16px;">File</span>
+                    <input id="#import-file" type="file">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+
+    <form id="dialog-export" class="__tts_dialog">
+        <div class="header">
+            <span class="title">Export</span>
+            <div class="buttons-right">
+                <i class="dialog-close icon-flat i-close small"></i>
+            </div>
+        </div>
+        <div class="content">
+            <div class="row" style="display: flex;flex-direction: column;">
+                <div class="input-field col s12">
+                    <input id="package-name" type="text" name="package" value="com.juamdi.tekatekisilang">
+                    <label for="package-name">Package Name</label>
+                </div>
+                <div class="input-field col s12">
+                    <input id="class-name" type="text" name="class" value="Soal">
+                    <label for="class-name">Class Name</label>
+                </div>
+                <div class="input-field col s12">
+                    <select name="categories" id="format-file">
+                        <option value="kotlin" selected>Kotlin</option>
+                        <option value="java">Java</option>
+                        <option value="json">Json</option>
+                        <label>Format File</label>
+                    </select>
+                </div>
+                <p>
+                    <input type="checkbox" id="preview-code" />
+                    <label for="preview-code">Preview Code</label>
+                </p>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="right-align">
+                <div id="export" class="button accent mini">Export</div>
+                <div class="dialog-close button red mini">Cencel</div>
+            </div>
+        </div>
+    </form>
+
+    <ul id="menu-level" class="__tts_context-menu">
+        <li id="edit">Edit</li>
+        <li id="delete">Delete</li>
+    </ul>
+
+    <ul id="menu-category" class="__tts_context-menu">
+        <li id="add">Add Category</li>
+        <li id="delete">Delete Category</li>
+        <li id="export">Export</li>
+        <li id="import">Import</li>
+    </ul>
+     <!--<div class="__tts_menu right">
+        <div class="switch"></div>
+
+        <div class="button icon small">
+            <i class="icon-flat i-cog"></i>
+        </div>
+    </div>-->
+
+    <!--<script src="init.js"></script>-->
+    <script type="text/javascript" src="dist/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="dist/js/materialize.min.js"></script>
+    <script type="text/javascript" src="dist/js/idb.js"></script>
+    <script type="text/javascript" src="dist/js/prism.js"></script>
+
+    <script type="text/javascript" src="dist/js/database.js"></script>
+    <script type="text/javascript" src="dist/js/script.js"></script>
+    <script type="text/javascript" src="dist/js/tts-editor.js"></script>
+    <script type="text/javascript" src="dist/js/level-editor.js"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        $(document).ready(function () {
 
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
+            var tsilang = new Tsilang({});
+            tsilang.init();
+
+            $('.button').animClick();
+            $('.__tts_menu.right').menu();
+            $('#dialog-about').dialog();
+
+            $('#dialog-create-category').dialog({
+                isMove: true,
+                isAutoClose: false
+            }).initComponent(function () {
+                $(this).find('#create').animClick(() => {
+                    let rowcount = $(this).find('#row-count').val();
+                    let columncount = $(this).find('#column-count').val();
+                    if (columncount != '' && rowcount != '') {
+                        tsilang.createCategory(parseInt(columncount), parseInt(columncount),
+                            () => {
+                                $(this).gone();
+                            });
+                    }
+                });
+            });
+
+            let initMenuCategory = function() {
+                let $this = $(this);
+                $(this).find('#add').click(function () {
+                    $this.gone();
+                    $('#dialog-create-category').visible();
+                });
+                $(this).find('#export').click(function () {
+                    let id = $('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent().data(
+                        'id');
+                    if (typeof id === "number") {
+                        $this.gone();
+                        $('#dialog-export').attr('data-id', id).visible();
+                    }
+                });
+                $(this).find('#import').click(function () {
+                    $this.gone();
+                    $('#dialog-import').visible();
+                });
+
+                $(this).find('#delete').click(() => {
+                    let id = $('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent().data(
+                        'id');
+                    if (typeof id === "number") {
+                        tsilang.removeCategory(parseInt(id), () => {
+                            $(this).gone();
+                        });
+                    }
+                });
+            };
+
+            $('#menu-category').contextMenu({
+                target: 'li.tab',
+                positionCurcor: true,
+                show: function (target) {
+                    console.log('ok');
+                    $(this).find('#export').text('Export ' + $(target).text());
+                    $(this).find('#delete').text('Delete Category ' + $(target).text());
+                }
+            }).initComponent(initMenuCategory);
+
+            $('#menu-category').contextMenu({
+                target: '.tabs',
+                positionCurcor: true,
+                show: function (target) {
+                    var text = $('.__tts_tabs_levels ul.tabs > li.tab > a.active').text();
+                    $(this).find('#export').text('Export ' + text);
+                    $(this).find('#delete').text('Delete Category ' + text);
+                }
+            }).initComponent(initMenuCategory);
+
+
+            $('#menu-level').contextMenu({
+                target: '.grid > .button',
+                show: function (target) {
+                    var id = $(target).find('span').data('id');
+                    if (typeof id === "number") {
+                        $(this).attr('data-id', id);
+                    }
+                }
+            }).initComponent(function () {
+                let $this = $(this);
+                $(this).find('#edit').click(() => {
+                    let id = $this.data('id');
+                    if (typeof id === "number") {
+                        window.location = 'tsilang-editor.html?id=' + id;
+                    }
+                });
+                $(this).find('#delete').click(() => {
+                    let id = $this.data('id');
+                    if (typeof id === "number") {
+                        tsilang.remove(parseInt(id), () => {
+                            $this.gone();
+                        });
+                    }
+                });
+            });
+
+            $('#dialog-export').dialog({
+                isMove: true,
+                isAutoClose: false,
+                show: function () {
+                    $('select').material_select('destroy');
+                    $('select').material_select();
+                }
+            }).initComponent(function () {
+                let $this = $(this);
+
+                function changePreview() {
+                    var id = parseInt($this.attr('data-id'));
+                    if (typeof id === "number" && $this.find('#preview-code').prop('checked')) {
+                        tsilang.preview(id, {
+                            package_name: $this.find('#package-name').val(),
+                            class_name: $this.find('#class-name').val(),
+                            type: $this.find('#format-file').val(),
+                            perCountFile: 10
+                        }, (data) => {
+                            let dialog = $('#dialog-preview-code');
+                            dialog.find('pre').html('<code class="language-' + $this.find(
+                                '#format-file').val() + '"></code>');
+                            dialog.find('code').html(data[0]);
+                            Prism.highlightAll();
+                            if (!dialog.hasClass('visible') || dialog.hasClass('gone')) {
+                                dialog.visible();
+                            }
+                        });
+                    } else {
+                        $('#dialog-preview-code').gone();
+                        $('code').html('');
+                    }
+                }
+
+                $(this).find('#package-name').focusout(() => changePreview());
+                $(this).find('#class-name').focusout(() => changePreview());
+                $(this).find('#format-file').change(() => changePreview());
+                $(this).find('#preview-code').click(() => changePreview());
+
+                $(this).find('#export').animClick(function () {
+                    let id = parseInt($this.attr('data-id'));
+                    
+                    if (typeof id === "number") {
+                        tsilang.download(id, {
+                            package_name: $this.find('#package-name').val(),
+                            class_name: $this.find('#class-name').val(),
+                            type: $this.find('#format-file').val(),
+                            perCountFile: -1
+                        }, () => $this.gone());
+                    }
+                });
+            });
+
+            $('#dialog-import').dialog({
+                isMove: true,
+                isAutoClose: false
+            }).initComponent(function () {
+                let $this = $(this);
+                function changeFile(params) {
+                    if (/\.(java|json|kt|dt)$/i.test(this.files[0].name)) {
+                        let type = this.files[0].name;
+                        if (this.files && this.files[0]) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                tsilang.import(e.target.result, type , () => $this.gone());
+                            };
+                            reader.readAsText(this.files[0]);
+                        }
+                    }
+                }
+                $(this).find('input[type="file"]').on('drop', changeFile);
+                $(this).find('input[type="file"]').change(changeFile);
+            });
+            $('#dialog-preview-code').dialog({
+                isMove: true,
+                isAutoClose: false,
+                hide: function () {
+                    $('#dialog-export').find('#preview-code').prop('checked', false);
+                }
+            });
+        });
     </script>
-  </body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+          // // The Firebase SDK is initialized and available here!
+          //
+          // firebase.auth().onAuthStateChanged(user => { });
+          // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+          // firebase.messaging().requestPermission().then(() => { });
+          // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+          //
+          // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+  
+          //try {
+          //  let app = firebase.app();
+          //  let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+          //  document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+          //} catch (e) {
+          //  console.error(e);
+          //  document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+          //}
+        });
+      </script>
+</body>
+
 </html>

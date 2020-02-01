@@ -192,6 +192,10 @@ html {
     font-size: 22px;
 }
 
+.button.loading {
+    
+}
+
 /*----------------------------------------
     Icons
 ------------------------------------------*/
@@ -285,6 +289,18 @@ ul.__tts_context-menu > li:hover {
     min-height: 140px;
     padding: 1rem 0.8rem;
     overflow-y: auto;
+}
+
+.__tts_dialog > .content::-webkit-scrollbar {
+    width: 7px;
+    background-color: var(--color-primary);
+    position: absolute;
+    left: 0;
+}
+
+.__tts_dialog > .content::-webkit-scrollbar-thumb {
+    background-color: #2b2b2b5c;
+    border-radius: 5px;
 }
 
 .__tts_dialog > .header {

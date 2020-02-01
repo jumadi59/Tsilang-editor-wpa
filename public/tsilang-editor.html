@@ -5,8 +5,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-
     <title>Teka-Teki Silang Editor - Cumacoding.com</title>
+
+    <link rel="apple-touch-icon" sizes="72x72" href="dist/icons/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="dist/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="dist/icons/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="dist/icons/icon-152x152.png">
+  
+    <link rel="icon" type="image/png" href="dist/icons/icon-72x72.png" sizes="72x72">
+    <link rel="icon" type="image/png" href="dist/icons/icon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="dist/icons/icon-192x192.png" sizes="192x192">
 
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -103,15 +111,17 @@
             </div>
         </div>
         <div class="content">
-            <img src="dist/css/image/logo.png" width="120" height="auto" class="center-block" />
+            <img src="dist/icons/icon-512x512.png" width="120" style="margin: 5px;" height="auto" class="center-block" />
             <div class="center">
                 <h6 style="margin: 0px; line-height: 80%;">Teka-Teki Silang Editor</h6>
                 <span style="font-size: 13px;">V 0.0.1</span>
             </div>
             <div class="center">
-                <a class="button icon mini black" href="https://github.com/jum4di59"><i class="fa fa-github"></i></a>
-                <a class="button icon mini primary" href="https://linkedin.com"><i class="fa fa-linkedin"></i></a>
-                <a class="button icon mini red"><i class="fa fa-google-plus"></i></a>
+                <a class="button icon mini black" target="_blank" href="https://github.com/jum4di59"><i
+                        class="fa fa-github"></i></a>
+                <a class="button icon mini primary" target="_blank" href="https://linkedin.com"><i
+                        class="fa fa-linkedin"></i></a>
+                        <a class="button icon mini red" target="_blnk" href="mailto:jum4di59@gmail.com"><i class="fa fa-envelope"></i></a>
             </div>
         </div>
         <div class="footer"></div>
@@ -146,6 +156,7 @@
         </div>
     </div>
 
+    <script src="init.js"></script>
     <script type="text/javascript" src="dist/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="dist/js/materialize.min.js"></script>
     <script type="text/javascript" src="dist/js/idb.js"></script>
@@ -156,7 +167,7 @@
     <script>
         $(document).ready(function () {
             var urlParams = new URLSearchParams(window.location.search);
-            const id = parseInt(urlParams.get('id'));
+            var id = parseInt(urlParams.get('id'));
             const column = parseInt(urlParams.get('column'));
             const row = parseInt(urlParams.get('row'));
 
@@ -172,6 +183,15 @@
                 isMove: true,
                 isAutoClose: false,
                 show: function () {
+                    $('.__tts_tabs_levels .grid > .button').click(function () {
+                        let iid = $(this).find('span').data('id');
+                        if (id !== iid) {
+                            id = iid;
+                        console.log('ok');
+                        let url = window.location.origin + window.location.pathname +'?id=' + id;
+                        history.pushState(id, null, url);
+                        }
+                    });
                     if (id) {
                         tsilang.setFocus(id);
                     }
@@ -180,6 +200,12 @@
             $('#dialog-about').dialog();
             $('.__tts_menu.right').menu({});
             $('.button').animClick();
+
+            $(window).bind('popstate', function (e) {
+                if (e.originalEvent.state) {
+                    tsilang.setFocus(e.originalEvent.state);
+                }
+            })
         });
     </script>
 </body>

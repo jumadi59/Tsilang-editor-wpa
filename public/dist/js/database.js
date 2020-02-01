@@ -62,7 +62,7 @@ const dbLevel = {
                 data.level === value.data.level));
 			if (typeof callback === "function" && find) {
                 callback(find);
-            }
+            } else
             if (typeof callbackError === "function" && !find) {
                 callbackError();
             }
@@ -117,8 +117,7 @@ const dbCategory = {
             let find = values.find((value) => (data.row_count === value.data.row_count && data.column_count === value.data.column_count));
             if (typeof callback === "function" && find) {
                 callback(find);
-            }
-            if (typeof callbackError === "function" && !find) {
+            } else if (typeof callbackError === "function" && !find) {
                 callbackError();
             }
         });
@@ -141,3 +140,4 @@ const dbCategory = {
         })
     }
 };
+dbCategory.init();

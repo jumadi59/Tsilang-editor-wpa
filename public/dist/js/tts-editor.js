@@ -84,7 +84,7 @@ const TtsEditor = function(options) {
                             this.alert('Kata melewati batas', 'error');
                         }
                     } else {
-                        if (!$('#'+s).hasClass('item-box') && $('#'+s).data('double') != 1) {
+                        if (!$('#'+s).hasClass('item-box') && $('#'+s).attr('data-double') != 1) {
                             $('#'+s).text('');
                         }
                         if (i != 0) {
@@ -121,14 +121,14 @@ const TtsEditor = function(options) {
                 return;
             }
             tableGrid.find('td').each(function() {
-                if($(this).data('double') != 1 && $(this).data('double') != undefined) {
-                    var dt = $(this).data('double');
+                if($(this).attr('data-double') != 1 && $(this).attr('data-double') != undefined) {
+                    var dt = $(this).attr('data-double');
                     $(this).text(dt);
                     $(this).removeAttr('data-double');
                 }
     
                 if (!$(this).hasClass('item-box') && !$(this).hasClass('box-num')) {
-                    if ($(this).data('double') != 1) {
+                    if ($(this).attr('data-double') != 1) {
                         $(this).text('');
                     } else {
                         $(this).addClass('item-box');
@@ -184,7 +184,7 @@ const TtsEditor = function(options) {
                 return;
             }
     
-            var id = tablequestions.find('tr:last-child').data('id');
+            //var id = tablequestions.find('tr:last-child').attr('data-id');
             var arr = {
                 'answer' : answer,
                 'question' : question,

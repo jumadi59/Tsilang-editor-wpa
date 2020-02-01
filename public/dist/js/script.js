@@ -2,10 +2,19 @@
     const rects = [];
 
     var constantX = (cursorX, target) => {
-        return (cursorX > target.offsetLeft) && (cursorX < target.offsetLeft + target.offsetWidth)
+        return (cursorX > $(target).position().left) && (cursorX < $(target).position().left + target.offsetWidth)
     }
     var constantY = (cursorY, target) => {
-        return (cursorY > target.offsetTop && cursorY < (target.offsetTop + target.offsetHeight))
+        return (cursorY > $(target).position().top && cursorY < ($(target).position().top + target.offsetHeight))
+    }
+
+    var constantRect = (target, target2) => {
+        if ($(target).position().left >= $(target2).position().left && ($(target).position().left + target.offsetWidth) <= ($(target2).position().left + target2.offsetWidth)) {
+            if ($(target).position().top >= $(target2).position().top && ($(target).position().top + target.offsetHeight) <= ($(target2).position().top + target2.offsetHeight)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     $(document).mousedown((e) => {
@@ -16,7 +25,7 @@
                 }
             }
             var rectObject = $(value.rectObject);
-            var isClose  = (typeof value.isAutoClose === "boolean")? value.isAutoClose : true;
+            var isClose = (typeof value.isAutoClose === "boolean") ? value.isAutoClose : true;
             if (rectObject.hasClass('visible') && isClose) {
                 var y = e.clientY + $(window).scrollTop();
                 var x = e.clientX + $(window).scrollLeft();
@@ -43,18 +52,13 @@
     $(document).bind('contextmenu rightclick', function (e) {
         let filter = rects.filter(v => v.type === 'context_menu');
         var isShow = false;
+
         filter.forEach((value) => {
             let y = e.clientY + $(window).scrollTop();
             let x = e.clientX + $(window).scrollLeft();
             if (value.target) {
                 $(value.target).each(function () {
-                    let rect = {
-                        offsetTop: $(this).position().top,
-                        offsetLeft: $(this).position().left,
-                        offsetHeight: this.offsetHeight,
-                        offsetWidth: this.offsetWidth
-                    }
-                    if (constantX(x, rect) && constantY(y, rect) && $(this).is($(e.target))) {
+                    if (constantRect(e.target, this)) {
                         if (value.positionCurcor) {
                             $(value.rectObject)
                                 .css('left', (x + 4))
@@ -75,17 +79,14 @@
         if (isShow) {
             e.preventDefault();
         }
-        
+
         return !isShow;
     });
 
     $.fn.visible = function () {
         $(this).css('opacity', '0.0');
-        if ($(this).hasClass('gone')) {
-            $(this).removeClass('gone');
-        } else {
-            $(this).addClass('visible');
-        }
+        $(this).removeClass('gone');
+        $(this).addClass('visible');
         $(this).animate({
             opacity: 1.0
         }, 200);
@@ -102,11 +103,8 @@
         $(this).animate({
             opacity: 0.0
         }, 200, () => {
-            if ($(this).hasClass('visible')) {
-                $(this).removeClass('visible');
-            } else {
-                $(this).addClass('gone')
-            }
+            $(this).removeClass('visible');
+            $(this).addClass('gone');
             $(this).css('opacity', '1.0');
         });
         var find = rects.find(v => v.rectObject[0] === this[0]);
@@ -170,9 +168,9 @@
     $.fn.menu = function () {
         let s = $(this).find('.switch');
         if ($(this).hasClass('left')) {
-            $(this).css('left', -($(this).width() - s.outerWidth() +4) + 'px');
+            $(this).css('left', -($(this).width() - s.outerWidth() + 4) + 'px');
         } else {
-            $(this).css('right', -($(this).width() - s.outerWidth() +4) + 'px');
+            $(this).css('right', -($(this).width() - s.outerWidth() + 4) + 'px');
         }
         s.click(function () {
             $(this).parent().toggleClass('open');
@@ -195,16 +193,24 @@
     $.fn.dialog = function (ops) {
         var isMove = (typeof ops !== "undefined" && typeof ops.isMove === "boolean") ? ops.isMove : false;
         var isAutoClose = (typeof ops !== "undefined" && typeof ops.isAutoClose === "boolean") ? ops.isAutoClose : true;
-        
+
         rects.push({
             type: 'dialog',
             rectObject: this,
             target: null,
             isAutoClose: isAutoClose,
-            show: function() {
+            hide: (typeof ops !== "undefined") ? ops.hide : null,
+            show: function () {
                 let left = ($(window).width() - $(this).outerWidth()) / 2;
                 let top = ($(window).height() - $(this).outerHeight()) / 2;
                 $(this).css('left', left + 'px').css('top', top + 'px');
+
+                const header = $(this).find('.header');
+                const content = $(this).find('.content');
+                const footer = $(this).find('.footer');
+                if ((content.outerHeight() + header.outerHeight() + footer.outerHeight()) > $(window).height()) {
+                    content.outerHeight($(window).height() - (header.outerHeight() + footer.outerHeight() + 8));
+                }
                 if (typeof ops !== "undefined" && typeof ops.show === "function") {
                     ops.show.apply(this);
                 }
@@ -226,12 +232,12 @@
             header.mousedown(function (e) {
                 header.css('cursor', 'move');
                 isDown = true;
-                root.css('z-index', (parseInt(root.css('z-index'))+2));
+                root.css('z-index', (parseInt(root.css('z-index')) + 2));
                 positionStart = {
                     x: e.clientX,
                     y: e.clientY
                 }
-                
+
             });
             header.mousemove(function (e) {
                 if (isDown) {
@@ -248,7 +254,7 @@
                 if (isDown) {
                     header.css('cursor', 'default');
                     isDown = false;
-                    root.css('z-index', (parseInt()-1));
+                    root.css('z-index', (parseInt() - 1));
                 }
             });
         }
@@ -263,3 +269,132 @@
         return $(this);
     }
 })(jQuery);
+
+var Base64 = {
+    // private property
+    _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+
+    // public method for encoding
+    encode: function (input) {
+        var output = "";
+        var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+        var i = 0;
+
+        input = Base64._utf8_encode(input);
+
+        while (i < input.length) {
+
+            chr1 = input.charCodeAt(i++);
+            chr2 = input.charCodeAt(i++);
+            chr3 = input.charCodeAt(i++);
+
+            enc1 = chr1 >> 2;
+            enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+            enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+            enc4 = chr3 & 63;
+
+            if (isNaN(chr2)) {
+                enc3 = enc4 = 64;
+            } else if (isNaN(chr3)) {
+                enc4 = 64;
+            }
+
+            output = output +
+                Base64._keyStr.charAt(enc1) + Base64._keyStr.charAt(enc2) +
+                Base64._keyStr.charAt(enc3) + Base64._keyStr.charAt(enc4);
+
+        }
+
+        return output;
+    },
+
+    // public method for decoding
+    decode: function (input) {
+        var output = "";
+        var chr1, chr2, chr3;
+        var enc1, enc2, enc3, enc4;
+        var i = 0;
+
+        input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+
+        while (i < input.length) {
+
+            enc1 = Base64._keyStr.indexOf(input.charAt(i++));
+            enc2 = Base64._keyStr.indexOf(input.charAt(i++));
+            enc3 = Base64._keyStr.indexOf(input.charAt(i++));
+            enc4 = Base64._keyStr.indexOf(input.charAt(i++));
+
+            chr1 = (enc1 << 2) | (enc2 >> 4);
+            chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+            chr3 = ((enc3 & 3) << 6) | enc4;
+
+            output = output + String.fromCharCode(chr1);
+
+            if (enc3 != 64) {
+                output = output + String.fromCharCode(chr2);
+            }
+            if (enc4 != 64) {
+                output = output + String.fromCharCode(chr3);
+            }
+
+        }
+
+        output = Base64._utf8_decode(output);
+
+        return output;
+
+    },
+
+    // private method for UTF-8 encoding
+    _utf8_encode: function (string) {
+        string = string.replace(/\r\n/g, "\n");
+        var utftext = "";
+
+        for (var n = 0; n < string.length; n++) {
+
+            var c = string.charCodeAt(n);
+
+            if (c < 128) {
+                utftext += String.fromCharCode(c);
+            } else if ((c > 127) && (c < 2048)) {
+                utftext += String.fromCharCode((c >> 6) | 192);
+                utftext += String.fromCharCode((c & 63) | 128);
+            } else {
+                utftext += String.fromCharCode((c >> 12) | 224);
+                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                utftext += String.fromCharCode((c & 63) | 128);
+            }
+
+        }
+
+        return utftext;
+    },
+
+    // private method for UTF-8 decoding
+    _utf8_decode: function (utftext) {
+        var string = "";
+        var i = 0;
+        var c = c1 = c2 = 0;
+
+        while (i < utftext.length) {
+
+            c = utftext.charCodeAt(i);
+
+            if (c < 128) {
+                string += String.fromCharCode(c);
+                i++;
+            } else if ((c > 191) && (c < 224)) {
+                c2 = utftext.charCodeAt(i + 1);
+                string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+                i += 2;
+            } else {
+                c2 = utftext.charCodeAt(i + 1);
+                c3 = utftext.charCodeAt(i + 2);
+                string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+                i += 3;
+            }
+
+        }
+        return string;
+    }
+}

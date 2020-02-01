@@ -367,3 +367,13 @@ a.brand-logo {
 .tabs .indicator {
     background-color: var(--color-accentDark)
 }
+
+input { 
+    height: 2rem !important;
+    margin: 0 0 15px 0 !important;
+}
+
+.dropdown-content li {
+    min-height: 20px !important;
+    line-height: 1rem !important;
+}
