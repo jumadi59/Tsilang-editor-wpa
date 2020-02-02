@@ -4,8 +4,8 @@
     --color-accent: #04c7b7;
     --color-accentDark: #02b8a8;
     --color-textDark: #4a4848;
-    --color-redDark: #e13737;
-    --color-red: #ee4c4c;
+    --color-redDark: #ce2a2a;
+    --color-red: #e23e3e;
     --color-black: #2e2e2e;
     --color-blackDark: #111111;
 }
@@ -237,7 +237,7 @@ html {
 
 ul.__tts_context-menu {
     display: none;
-    position: absolute;
+    position: fixed;
     min-width: 100px;
     padding: 5px 0px;
     background-color: #ffffff;

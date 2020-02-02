@@ -287,7 +287,24 @@
 
         return $(this);
     }
+
+    $.fn.matchHeight = function () {
+        let $this = $(this);
+        let top = $(this).position().top;
+        let height = $(window).innerHeight() - top -22;
+        $(this).outerHeight(height);
+        $(window).resize(function () {
+            top = $this.position().top;
+            height = $(window).innerHeight() - top -22;
+            $this.outerHeight(height);
+        });
+    }
+
 })(jQuery);
+
+const createId = function () {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+}
 
 const Alert = {
     message: function (message, durationLenght) {
@@ -295,8 +312,7 @@ const Alert = {
         this.finish(message, id, durationLenght);
     },
     loading: function(message) {
-        var id = Math.random().toString(32);
-        id = id.slice(2, id.length);
+        var id = createId();
         let html = $('<div class="alert" id="'+id+'"><span>'+message+'</span></div>');
         $(document.body).append(html);
         html.css('left', -html.width() + 'px');

@@ -251,8 +251,8 @@
                     $('#dialog-create-category').visible();
                 });
                 $(this).find('#export').click(function () {
-                    let id = $('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent().data(
-                        'id');
+                    let id = parseInt($('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent().data(
+                        'id'));
                     if (typeof id === "number") {
                         $this.gone();
                         $('#dialog-export').attr('data-id', id).visible();
@@ -264,8 +264,8 @@
                 });
 
                 $(this).find('#delete').click(() => {
-                    let id = $('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent().data(
-                        'id');
+                    let id = parseInt($('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent().data(
+                        'id'));
                     if (typeof id === "number") {
                         let idAlert = Alert.loading('Memproses..');
                         tsilang.removeCategory(parseInt(id), () => {
@@ -299,7 +299,7 @@
             $('#menu-level').contextMenu({
                 target: '.grid > .button',
                 show: function (target) {
-                    var id = $(target).find('span').data('id');
+                    var id = parseInt($(target).find('span').data('id'));
                     if (typeof id === "number") {
                         $(this).attr('data-id', id);
                     }
@@ -307,13 +307,13 @@
             }).initComponent(function () {
                 let $this = $(this);
                 $(this).find('#edit').click(() => {
-                    let id = $this.data('id');
+                    let id = parseInt($this.attr('data-id'));
                     if (typeof id === "number") {
                         window.location = 'tsilang-editor.html?id=' + id;
                     }
                 });
                 $(this).find('#delete').click(() => {
-                    let id = $this.data('id');
+                    let id = parseInt($this.attr('data-id'));
                     if (typeof id === "number") {
                         let idAlert = Alert.loading('Memproses..');
                         tsilang.remove(parseInt(id), () => {

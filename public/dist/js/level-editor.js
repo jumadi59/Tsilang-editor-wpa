@@ -23,16 +23,20 @@ const Tsilang = function (options) {
 	function removed(id, callback) {
 		dbLevel.get(id).then((result) => {
 			if (result) {
-				var level = result.data.level;
+				let level = result.data.level;
+				let rowCount = result.data.row_count;
+				let columnCount = result.data.column_count;
 				dbLevel.delete(id).then(() => {
+					
 					dbLevel.getAll().then((results) => {
-						var filter = results.filter(value => value.data.level > level);
+						var filter = results.filter(value => value.data.level > level && rowCount === value.data.row_count && columnCount === value.data.column_count);
+						console.log('getAll ok '+filter.length);
 						if (filter.length === 0) {
 							$('.__tts_tabs_levels .grid')
 								.find('span[data-id="' + id + '"]')
 								.parent().remove();
 							if (typeof callback === "function") {
-								callback();
+								callback.apply();
 							}
 						}
 						filter.forEach((v, i) => {
@@ -46,7 +50,7 @@ const Tsilang = function (options) {
 								if (i === filter.length - 1) {
 									levels(result.data.column_count, result.data.row_count);
 									if (typeof callback === "function") {
-										callback();
+										callback.apply();
 									}
 								}
 							});
@@ -333,7 +337,9 @@ const Tsilang = function (options) {
 				};
 				dbLevel.getAll().then((result) => {
 					const filter = result.filter((value) => findCategory(value.data, r));
-					let perCountFile = (data.perCountFile > 0) ? data.perCountFile : filter.length;
+					let perCountFile = (data.perCountFile > 0)? data.perCountFile : filter.length;
+					console.log(perCountFile);
+					
 
 					let count = Math.round(filter.length / perCountFile);
 					let sisa = Math.round(filter.length - (count * perCountFile));
@@ -346,7 +352,8 @@ const Tsilang = function (options) {
 						let from = (i * perCountFile);
 						let to = ((i + 1) * perCountFile);
 						let arr = filter.slice(from, (to > filter.length)? (from + sisa) : to);
-
+						console.log(from +' '+to);
+						
 						let o = {
 							'packageName': c.packageName,
 							'category': c.category,
@@ -434,21 +441,13 @@ const Tsilang = function (options) {
 				data['perCountFile'] = 50
 			}
 			parse(id, data, (results, t) => {
-				if (data.perCountFile === -1) {
+				results.forEach(result => {
 					if (data.type === 'json') {
-						download(data.class_name + '.' + t.extesion, window.btoa(results[0])+'=');
+						download(data.class_name + '.' + t.extesion, result);
 					} else {
-						download(data.class_name + '.' + t.extesion, results[0]);
+						download(data.class_name + '.' + t.extesion, result);
 					}
-				} else {
-					results.forEach(result => {
-						if (data.type === 'json') {
-							download(data.class_name + '.' + t.extesion, window.btoa(result)+'=');
-						} else {
-							download(data.class_name + '.' + t.extesion, result);
-						}
-					})
-				}
+				});
 				callback();
 			})
 		},

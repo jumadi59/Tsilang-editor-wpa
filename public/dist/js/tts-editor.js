@@ -61,11 +61,11 @@ const TtsEditor = function(options) {
             }
             html += '</tbody>'
             tableGrid.append(html);
+            horizontal.prop("checked", true);
         },
 
         alert: function(message, type) {
             console.log(message);
-            
         },
 
         setAnswer: function (answers, answersOld) {
@@ -84,8 +84,10 @@ const TtsEditor = function(options) {
                             this.alert('Kata melewati batas', 'error');
                         }
                     } else {
-                        if (!$('#'+s).hasClass('item-box') && $('#'+s).attr('data-double') != 1) {
-                            $('#'+s).text('');
+                        if (!$('#'+s).hasClass('item-box')) {
+                            if (typeof $('#'+s).attr('data-double') === "undefined") {
+                                $('#'+s).text('');
+                            }
                         }
                         if (i != 0) {
                             $('#'+s).removeClass('item-select');
@@ -106,7 +108,9 @@ const TtsEditor = function(options) {
                         }
                     } else {
                         if (!$('#'+s).hasClass('item-box')) {
-                            $('#'+s).text('');
+                            if (typeof $('#'+s).attr('data-double') === "undefined") {
+                                $('#'+s).text('');
+                            }
                         }
                         if (i != 0) {
                             $('#'+s).removeClass('item-select');
@@ -117,18 +121,18 @@ const TtsEditor = function(options) {
         },
 
         resetState : function () {
-            if (this.answer == '') {
+            if (this.answer === '') {
                 return;
             }
             tableGrid.find('td').each(function() {
-                if($(this).attr('data-double') != 1 && $(this).attr('data-double') != undefined) {
+                if(parseInt($(this).attr('data-double')) !== 1 && $(this).attr('data-double') !== undefined) {
                     var dt = $(this).attr('data-double');
                     $(this).text(dt);
                     $(this).removeAttr('data-double');
                 }
     
                 if (!$(this).hasClass('item-box') && !$(this).hasClass('box-num')) {
-                    if ($(this).attr('data-double') != 1) {
+                    if (parseInt($(this).attr('data-double')) !== 1) {
                         $(this).text('');
                     } else {
                         $(this).addClass('item-box');
@@ -179,7 +183,7 @@ const TtsEditor = function(options) {
 
         saved : function(answer, question, column, row, orientation) {
         
-            if(answer.length == 0) {
+            if(answer.length === 0) {
                 this.alert('Kotak input harus di isi!', 'error');
                 return;
             }
@@ -193,7 +197,7 @@ const TtsEditor = function(options) {
                 'orientation' : orientation
             };
 
-            if (this.editIndex != -1) {
+            if (this.editIndex !== -1) {
                 this.questions[this.editIndex] = arr;
     
                 var item = [this.editIndex+1, question, answer];
@@ -394,7 +398,7 @@ const TtsEditor = function(options) {
             tablequestions.find('tr').each(function(index) {
                 $(this).attr("data-id", (index+1));
                 $(this).find("td").each(function(p) {
-                    if (p == 0) {
+                    if (p === 0) {
                         $(this).text(index+1);
                     }
                     $(this).find("a").each(function(){
@@ -416,7 +420,7 @@ const TtsEditor = function(options) {
                 'tsilang' : this.questions
             }
             
-            if (typeof this.callbackDone == 'function') {
+            if (typeof this.callbackDone === 'function') {
                 this.callbackDone(result);
             }
         },
@@ -508,7 +512,7 @@ const TtsEditor = function(options) {
         tts.answers = tts.answer.split('');
         tts.answersOld = tts.answerOld.split('');
 
-        if (evt.keyCode != 8) {
+        if (evt.keyCode !== 8) {
             tts.answersOld = tts.answers;
         }
         
@@ -518,7 +522,7 @@ const TtsEditor = function(options) {
     });
 
     inputAnswer.keypress(function(evt) {
-        if(evt.keyCode == 13) {
+        if(evt.keyCode === 13) {
             inputQuestion.focus();
             }
     });
@@ -526,7 +530,7 @@ const TtsEditor = function(options) {
     inputQuestion.keypress(function(evt) {
         tts.question = $(this).val();
         
-        if (evt.keyCode == 13) {
+        if (evt.keyCode === 13) {
         tts.saved(tts.answer, tts.question, tts.startColumn, tts.startRow, tts.orientation);
         tts.resetForm();
         inputRow.focus();

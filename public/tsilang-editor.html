@@ -44,7 +44,7 @@
     <!--Header-->
     <nav class="z-depth-0 green nav-extended">
         <div class="container nav-wrapper">
-            <a href="" class="brand-logo">TSilang Editor</a>
+            <a href="index.html" class="brand-logo">TSilang Editor</a>
             <ul id="nav-mobile" class="right">
                 <li><a href="https://cumacoding.com" class="white-text hide-on-med-and-down">Home</a></li>
                 <li><a href="#!" onclick="$('#dialog-about').visible()"
@@ -294,6 +294,8 @@
     <script type="text/javascript" src="dist/js/level-editor.js"></script>
     <script>
         $(document).ready(function () {
+            $('.__table-tts-questions tbody').matchHeight();
+
             var urlParams = new URLSearchParams(window.location.search);
             var id = parseInt(urlParams.get('id'));
 
@@ -357,8 +359,8 @@
                     $('#dialog-create-category').visible();
                 });
                 $(this).find('#export').click(function () {
-                    let id = $('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent().data(
-                        'id');
+                    let id = parseInt($('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent().data(
+                        'id'));
                     if (typeof id === "number") {
                         $this.gone();
                         $('#dialog-export').attr('data-id', id).visible();
@@ -370,8 +372,8 @@
                 });
 
                 $(this).find('#delete').click(() => {
-                    let id = $('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent().data(
-                        'id');
+                    let id = parseInt($('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent().data(
+                        'id'));
                     if (typeof id === "number") {
                            let idAlert = Alert.loading('Memproses..');
                         tsilang.removeCategory(parseInt(id), () => {
@@ -405,7 +407,7 @@
             $('#menu-level').contextMenu({
                 target: '.grid > .button',
                 show: function (target) {
-                    var id = $(target).find('span').data('id');
+                    var id = parseInt($(target).find('span').data('id'));
                     if (typeof id === "number") {
                         $(this).attr('data-id', id);
                     }
@@ -413,7 +415,7 @@
             }).initComponent(function () {
                 let $this = $(this);
                 $(this).find('#edit').click(() => {
-                    let id = $this.data('id');
+                    let id = parseInt($this.attr('data-id'));
                     if (typeof id === "number") {
                         tsilang.setFocus(id);
                         let url = window.location.origin + window.location.pathname + '?id=' +
@@ -422,7 +424,7 @@
                     }
                 });
                 $(this).find('#delete').click(() => {
-                    let id = $this.data('id');
+                    let id = parseInt($this.attr('data-id'));
                     if (typeof id === "number") {
                         let idAlert = Alert.loading('Memproses..');
                         tsilang.remove(parseInt(id), () => {
@@ -518,6 +520,28 @@
                     $('#dialog-export').find('#preview-code').prop('checked', false);
                 }
             });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+            // // The Firebase SDK is initialized and available here!
+            //
+            // firebase.auth().onAuthStateChanged(user => { });
+            // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+            // firebase.messaging().requestPermission().then(() => { });
+            // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+            //
+            // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+            //try {
+            //  let app = firebase.app();
+            //  let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+            //  document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+            //} catch (e) {
+            //  console.error(e);
+            //  document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+            //}
         });
     </script>
 </body>
