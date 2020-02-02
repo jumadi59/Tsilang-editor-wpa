@@ -31,7 +31,7 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-  /\.(?:css|png|jpg|svg|gif)$/,
+  /\.(?:css|woff|js|png|jpg|svg|gif)$/,
   workbox.strategies.cacheFirst({
     cacheName: 'assets-cache',
   }),

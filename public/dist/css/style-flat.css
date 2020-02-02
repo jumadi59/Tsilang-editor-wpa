@@ -14,15 +14,17 @@
     font-family: 'Comic Neue';
     src: url('font/ComicNeue-Bold.woff');
     src: url('font/ComicNeue-Bold.eot') format('embedded-opentype'), url('font/ComicNeue-Bold.woff') format('woff');
-    font-weight: normal;
+    font-weight: 400;
     font-style: normal;
+    font-display: fallback;
 }
 
 @font-face {
     font-family: 'Dimbo Regular';
+    src: local('Dimbo Regular'), url('font/Dimbo-Regular.woff') format('woff');
+    font-weight: 400;
     font-style: normal;
-    font-weight: normal;
-    src: local('Dimbo Regular'), url('font/Dimbo\ Regular.woff') format('woff');
+    font-display: fallback;
     }
     
     
