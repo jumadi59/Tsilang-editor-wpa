@@ -141,8 +141,8 @@ const TtsEditor = function(options) {
         },
 
         resetForm : function () {
-            horizontal.attr("checked", true);
-            vertical.attr("checked", false);
+            horizontal.prop("checked", true);
+            vertical.prop("checked", false);
             inputRow.val('');
             inputColumn.val('');
             inputAnswer.val('');

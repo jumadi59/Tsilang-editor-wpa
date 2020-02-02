@@ -267,9 +267,10 @@
                     let id = $('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent().data(
                         'id');
                     if (typeof id === "number") {
+                        let idAlert = Alert.loading('Memproses..');
                         tsilang.removeCategory(parseInt(id), () => {
                             $(this).gone();
-                            Alert.message('Berhasil di menghapus category!');
+                            Alert.finish('Berhasil menghapus category!', idAlert);
                         });
                     }
                 });
@@ -314,8 +315,9 @@
                 $(this).find('#delete').click(() => {
                     let id = $this.data('id');
                     if (typeof id === "number") {
+                        let idAlert = Alert.loading('Memproses..');
                         tsilang.remove(parseInt(id), () => {
-                            Alert.message('Berhasil di menghapus level!');
+                            Alert.finish('Berhasil menghapus level!', idAlert);
                             $this.gone();
                         });
                     }
@@ -387,8 +389,9 @@
                         if (this.files && this.files[0]) {
                             var reader = new FileReader();
                             reader.onload = function (e) {
+                                let idAlert = Alert.loading('Memproses...')
                                 tsilang.import(e.target.result, type, () => {
-                                    Alert.message('Berhasil file di import!');
+                                    Alert.finish('Berhasil file di import!', id);
                                     $this.gone();
                                 });
                             };

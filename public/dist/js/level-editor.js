@@ -436,14 +436,14 @@ const Tsilang = function (options) {
 			parse(id, data, (results, t) => {
 				if (data.perCountFile === -1) {
 					if (data.type === 'json') {
-						download(data.class_name + '.' + t.extesion, window.btoa(results[0]));
+						download(data.class_name + '.' + t.extesion, window.btoa(results[0])+'=');
 					} else {
 						download(data.class_name + '.' + t.extesion, results[0]);
 					}
 				} else {
 					results.forEach(result => {
 						if (data.type === 'json') {
-							download(data.class_name + '.' + t.extesion, window.btoa(results[0]));
+							download(data.class_name + '.' + t.extesion, window.btoa(result)+'=');
 						} else {
 							download(data.class_name + '.' + t.extesion, result);
 						}

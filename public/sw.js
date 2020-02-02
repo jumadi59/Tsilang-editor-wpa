@@ -7,14 +7,14 @@ if (workbox) {
 
 workbox.precaching.precacheAndRoute([
   '/manifest.json',
-  //{
-  //  url: '/index.html',
-  //  revision: '1'
- // },
- // {
-  //  url: '/tsilang-editor.html',
-  //  revision: '1'
-  //},
+  {
+    url: '/index.html',
+    revision: '1'
+  },
+  {
+    url: '/tsilang-editor.html',
+    revision: '1'
+  },
 ]);
 
 workbox.routing.registerRoute(

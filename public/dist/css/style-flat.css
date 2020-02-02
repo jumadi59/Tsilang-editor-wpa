@@ -427,21 +427,21 @@ ul.__tts_context-menu > li:hover {
 
 .alert {
     position: absolute;
-    min-width: 100px;
-    max-width: calc(100% / 4);
+    min-width: 150px;
     min-height: 50px;
     background-color: #111111c0;
     bottom: 25px;
     left: 0px;
+    opacity: 0;
     z-index: 1000;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     color: #ffffff;
-    font-size: 16px;
+    font-size: 17px;
     display: flex;
     text-align: center;
     align-items: center;
-    padding: 8px;
+    padding: 8px 16px;
 }
 
 .alert.top {
