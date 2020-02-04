@@ -243,7 +243,7 @@ ul.__tts_context-menu {
     min-width: 100px;
     padding: 5px 0px;
     background-color: #ffffff;
-    z-index: 99;
+    z-index: 1999;
     border-radius: 8px;
     -webkit-box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -5px rgba(0,0,0,0.3);
     box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -5px rgba(0,0,0,0.3);

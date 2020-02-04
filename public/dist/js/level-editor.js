@@ -13,8 +13,8 @@ const Tsilang = function (options) {
 	}
 
 	function saved(result) {
-		dbLevel.find(result, (value) => dbLevel.update(result, value.id).then(() => 
-		Alert.message('Berhasil di simpan!')),
+		dbLevel.find(result, (value) => dbLevel.update(result, value.id).then(() =>
+				Alert.message('Berhasil di simpan!')),
 			() => dbLevel.insert(result).then(() => {
 				Alert.message('Berhasil di simpan!');
 			}));
@@ -27,10 +27,10 @@ const Tsilang = function (options) {
 				let rowCount = result.data.row_count;
 				let columnCount = result.data.column_count;
 				dbLevel.delete(id).then(() => {
-					
+
 					dbLevel.getAll().then((results) => {
 						var filter = results.filter(value => value.data.level > level && rowCount === value.data.row_count && columnCount === value.data.column_count);
-						console.log('getAll ok '+filter.length);
+						console.log('getAll ok ' + filter.length);
 						if (filter.length === 0) {
 							$('.__tts_tabs_levels .grid')
 								.find('span[data-id="' + id + '"]')
@@ -79,13 +79,12 @@ const Tsilang = function (options) {
 
 			$('.__tts_tabs_levels .tabs').html(htmlTab).tabs({
 				onShow: function (params, content) {
-					if (typeof $(params)[0] !== "undefined") {
-						let find = params.find('.button.active');
-						var x = (typeof find !== "undefined") ? find.offsetLeft : $(params)[0].scrollWidth;
-						x = x - (params.width() / 2)
-						if (x > 0) {
-							console.log(x);
 
+					if (typeof $(params) !== "undefined") {
+						let find = params.find('.button.active');
+						var x = (typeof $(find).length > 0) ? $(find)[0].offsetLeft : params[0].scrollWidth;
+						x = x - (params.width() / 2);
+						if (x > 0) {
 							$(params).animate({
 								scrollLeft: x
 							}, x * 2);
@@ -108,22 +107,23 @@ const Tsilang = function (options) {
 				column_count: columnCount,
 				row_count: rowCount
 			}, (value) => {
-				console.log(value);
+				if (value) {
+					let id = columnCount + 'x' + rowCount;
+					$('#add-tab-category')
+						.attr('data-id', value.id)
+						.html('<a href="#' + id + '">' + id + '</a>')
+						.removeAttr('id');
+					$('#add-category.__tts_levels').attr('id', id);
+					levels(columnCount, rowCount);
 
-				let id = columnCount + 'x' + rowCount;
-				$('#add-tab-category')
-					.attr('data-id', value.id)
-					.html('<a href="#' + id + '">' + id + '</a>')
-					.removeAttr('id');
-				$('#add-category.__tts_levels').attr('id', id);
-				levels(columnCount, rowCount);
-
-				$('.__tts_tabs_levels .tabs').append(`<li class="tab" id="add-tab-category"><a href="#add-category"><i class="fa fa-plus"></i></a></li>`);
-				$('.__tts_tabs_levels').append('<div id="add-category" class="__tts_levels"></div>');
-				if (typeof callback === "function") {
-					callback();
+					$('.__tts_tabs_levels .tabs').append(`<li class="tab" id="add-tab-category"><a href="#add-category"><i class="fa fa-plus"></i></a></li>`);
+					$('.__tts_tabs_levels').append('<div id="add-category" class="__tts_levels"></div>');
+					$('.__tts_tabs_levels .tabs').find('a[href="#' + id + '"]').trigger('click');
+					if (typeof callback === "function") {
+						callback();
+					}
 				}
-			}, null);
+			});
 		});
 	}
 
@@ -135,8 +135,10 @@ const Tsilang = function (options) {
 						let filter = values.filter((value) => findLevel(data.data, value));
 						if (filter.length === 0) {
 							$('.__tts_tabs_levels .tabs').find('li.tab[data-id="' + id + '"]').remove();
-							$('#' + data.column_count + 'x' + data.row_count).remove();
-							$('.__tts_tabs_levels .tabs').find('li.tab')[0].trigger('click');
+							$('.__tts_tabs_levels #' + data.data.column_count + 'x' + data.data.row_count).remove();
+							let tabs = $('.__tts_tabs_levels .tabs').find('li.tab');
+							let current = (tabs.length > 1) ? tabs.length - 2 : 0;
+							$(tabs[current]).find('a').trigger('click');
 							if (typeof callback === "function") {
 								callback();
 							}
@@ -145,7 +147,7 @@ const Tsilang = function (options) {
 							dbLevel.delete(value.id).then(() => {
 								if (i === filter.length - 1) {
 									$('.__tts_tabs_levels .tabs').find('li.tab[data-id="' + id + '"]').remove();
-									$('#' + data.column_count + 'x' + data.row_count).remove();
+									$('__tts_tabs_levels #' + data.data.column_count + 'x' + data.data.row_count).remove();
 									$('.__tts_tabs_levels .tabs').find('a[href="#' + id + '"]').trigger('click');
 									if (typeof callback === "function") {
 										callback();
@@ -168,11 +170,14 @@ const Tsilang = function (options) {
 			var html = '';
 			let column = 5;
 			let row = 4;
-			var group = (filter.length / (column * row));
-			let sisa = (filter.length - (group * (column * row)));
-			group = (group === 0) ? 1 : (sisa === 0 && filter.length > (column * row)) ? (group + 1) : group;
+			let groupCount = (column * row);
 
-			for (let ig = 0; ig < group; ig++) {
+			let count = Math.round(filter.length / groupCount);
+			let sisa = Math.round(filter.length - (count * groupCount));
+			var groups = (count > 0) ? (count + ((sisa > 0) ? 1 : 0)) : ((sisa > 0) ? 1 : 0);
+			groups = (groups === 0) ? 1 : groups;
+
+			for (let ig = 0; ig < groups; ig++) {
 				html += '<div class="grid">';
 				for (let ri = 0; ri < row; ri++) {
 					for (let ci = 0; ci < column; ci++) {
@@ -184,7 +189,7 @@ const Tsilang = function (options) {
 					</div>`;
 						} else if (index === filter.length) {
 							let c = filter[index - 1];
-							let id = (c) ? c.data.level + 1 : 1
+							let id = (c) ? (c.data.level + 1) : 1
 							html += `<div class="button icon large accent" id="add-level" data-next="${id}">
 					<span title="Tambah level"><i class="fa fa-plus"></i></span>
 					</div>`;
@@ -209,13 +214,15 @@ const Tsilang = function (options) {
 			'row_count': rowCount,
 			'column_count': columnCount
 		}, (value) => {
-			dbLevel.insert({
-				'level': level,
-				'row_count': rowCount,
-				'column_count': columnCount,
-				'tsilang': []
-			}).then(callback);
-		}, null);
+			if (value) {
+				dbLevel.insert({
+					'level': level,
+					'row_count': rowCount,
+					'column_count': columnCount,
+					'tsilang': []
+				}).then(callback);
+			}
+		});
 	}
 
 	function parseToKotlin(data, options) {
@@ -278,7 +285,7 @@ const Tsilang = function (options) {
 			}
 			classText += '\n';
 		});
-		classText += '\t}\n};';
+		classText += '\t};\n}';
 
 		return classText;
 	}
@@ -297,7 +304,6 @@ const Tsilang = function (options) {
 	}
 
 	function parseJavaToArray(data) {
-
 	}
 
 	function parseKotlinToArray(params) {
@@ -337,13 +343,11 @@ const Tsilang = function (options) {
 				};
 				dbLevel.getAll().then((result) => {
 					const filter = result.filter((value) => findCategory(value.data, r));
-					let perCountFile = (data.perCountFile > 0)? data.perCountFile : filter.length;
-					console.log(perCountFile);
-					
+					let perCountFile = (data.perCountFile > 0) ? data.perCountFile : filter.length;
 
 					let count = Math.round(filter.length / perCountFile);
 					let sisa = Math.round(filter.length - (count * perCountFile));
-					
+
 					let j = (count > 0) ? (count + ((sisa > 0) ? 1 : 0)) : ((sisa > 0) ? 1 : 0);
 
 					let strings = [];
@@ -351,13 +355,14 @@ const Tsilang = function (options) {
 					for (let i = 0; i < j; i++) {
 						let from = (i * perCountFile);
 						let to = ((i + 1) * perCountFile);
-						let arr = filter.slice(from, (to > filter.length)? (from + sisa) : to);
-						console.log(from +' '+to);
-						
+						let s = (sisa < 0) ? Math.round((count * perCountFile) - filter.length) : sisa;
+						let arr = filter.slice(from, ((to > filter.length) ? (from + s) : to));
+						console.log(from + ' ' + ((to > filter.length) ? (from + s) : to));
+
 						let o = {
 							'packageName': c.packageName,
 							'category': c.category,
-							'className': c.className + ((i === 0)? '' : i)
+							'className': c.className + ((i === 0) ? '' : i)
 						}
 
 						if (t) {
@@ -395,43 +400,53 @@ const Tsilang = function (options) {
 		create: tts.create,
 		removeCategory: removeCategory,
 		createCategory: createCategory,
-		import: function (dataString, fileType, callback) {
+		import: function (dataString, fileType, isDuplicate, callback) {
 			let data = JSON.parse(dataString);
 			data.forEach((value, i) => {
+				let dataSoal = {
+					'level': value.level,
+					'row_count': value.row_count,
+					'column_count': value.column_count,
+					'tsilang': value.tsilang
+				};
 				dbCategory.find({
 					'row_count': value.row_count,
 					'column_count': value.column_count
-				}, () => {
-					dbLevel.insert({
-						'level': value.level,
-						'row_count': value.row_count,
-						'column_count': value.column_count,
-						'tsilang': value.tsilang
-					}).then(() => {
-						if (i === data.length - 1) {
-							callback();
-							$('.__tts_tabs_levels').html('');
-							loadDb();
-						}
-					});
-				}, () => {
-					dbCategory.insert({
-						'row_count': value.row_count,
-						'column_count': value.column_count
-					}).then(() => {
-						dbLevel.insert({
-							'level': value.level,
-							'row_count': value.row_count,
-							'column_count': value.column_count,
-							'tsilang': value.tsilang
-						}).then(() => {
-							if (i === data.length - 1) {
-								callback();
-								$('.__tts_tabs_levels').html('');
-								loadDb();
+				}, (result) => {
+					if (result) {
+						dbLevel.find(dataSoal, (r) => {
+							if (r && isDuplicate) {
+								dbLevel.update(dataSoal, r.id).then(() => {
+									if (i === data.length - 1) {
+										$('.__tts_tabs_levels').html('<div class="col s12"><ul class="tabs"></ul></div>');
+										callback();
+										loadDb();
+									}
+								});
+							} else {
+								dbLevel.insert(dataSoal).then(() => {
+									if (i === data.length - 1) {
+										$('.__tts_tabs_levels').html('<div class="col s12"><ul class="tabs"></ul></div>');
+										callback();
+										loadDb();
+									}
+								});
 							}
 						});
-					});
+					} else {
+						dbCategory.insert({
+							'row_count': value.row_count,
+							'column_count': value.column_count
+						}).then(() => {
+							dbLevel.insert(dataSoal).then(() => {
+								if (i === data.length - 1) {
+									$('.__tts_tabs_levels').html('<div class="col s12"><ul class="tabs"></ul></div>');
+									loadDb();
+									callback();
+								}
+							});
+						});
+					}
 				});
 			});
 		},
@@ -460,7 +475,8 @@ const Tsilang = function (options) {
 			dbLevel.get(id).then((value) => {
 				if (value) {
 					tts.loads(value.data);
-					$('.__tts_tabs_levels .grid').find('.button span[data-id="' + id + '"]').trigger('click');
+					$('.__tts_tabs_levels .grid')
+					.find('.button span[data-id="' + id + '"]').parent().addClass('active');
 					let category = value.data.column_count + 'x' + value.data.row_count;
 					$('.__tts_tabs_levels .tabs').find('a[href="#' + category + '"]').trigger('click');
 				}
@@ -482,7 +498,7 @@ const Tsilang = function (options) {
 	});
 
 	$('.__tts_tabs_levels').delegateClick('#add-level', function () {
-		var level = $(this).data('next');
+		var level = parseInt($(this).data('next'));
 		var cetegory = $(this).parent().parent().attr('id');
 		var frist = $(this).parent().find('.item-empty');
 		if (frist.length === 0) {
@@ -495,8 +511,8 @@ const Tsilang = function (options) {
 		}
 		frist[0].outerHTML = $(this)
 			.css('transform', 'scaleX(1) scaleY(1)')
-			.attr('data-next', (parseInt(level) + 1))[0].outerHTML;
-			
+			.attr('data-next', (level + 1))[0].outerHTML;
+
 		if (typeof cetegory !== "undefined") {
 			var s = cetegory.split("x");
 			create(level, parseInt(s[0]), parseInt(s[1]), () => {
@@ -505,14 +521,16 @@ const Tsilang = function (options) {
 					'row_count': parseInt(s[0]),
 					'column_count': parseInt(s[1]),
 				}, (value) => {
-					$(this)
-						.removeClass('accent')
-						.addClass('active')
-						.removeAttr('next')
-						.removeAttr('id')
-						.removeAttr('style')
-						.html(`<span data-id="${value.id}">${level}</span>`);
-				}, null);
+					if (value) {
+						$(this)
+							.removeClass('accent')
+							.addClass('active')
+							.removeAttr('data-next')
+							.removeAttr('id')
+							.removeAttr('style')
+							.html(`<span data-id="${value.id}">${level}</span>`);
+					}
+				});
 			});
 		}
 

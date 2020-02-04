@@ -145,12 +145,11 @@ a.brand-logo {
     display: block;
     padding: 0.6rem;
     text-align: center;
-    min-height: 36px;
 }
 
 .__tts-grid td:first-child,
 .__tts-grid th:first-child {
-    flex-basis: 80%;
+    flex-basis: 100%;
     flex-grow: 1;
     border-radius: 0px;
 }
@@ -161,12 +160,15 @@ a.brand-logo {
     text-transform: uppercase;
     background-color: black;
     margin: 0.1rem;
+    min-width: 35px;
+    min-height: 35px;
 }
 
 .__tts-grid>tbody>tr>td.box-num {
     color: white;
     background-color: var(--color-primary);
     border-bottom: 2px solid var(--color-primaryDark);
+    border-right: 2px solid var(--color-primaryDark);
     margin: 0px;
 }
 

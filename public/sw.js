@@ -31,8 +31,48 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-  /\.(?:css|woff|js|png|jpg|svg|gif)$/,
+  /\.(?:css|js|woff|png|jpg|svg|gif)$/,
   workbox.strategies.cacheFirst({
     cacheName: 'assets-cache',
   }),
+);
+
+workbox.routing.registerRoute(
+  /^https:\/\/fonts\.googleapis\.com/,
+  workbox.strategies.staleWhileRevalidate({
+    cacheName: 'assets-cache',
+  })
+);
+
+
+workbox.routing.registerRoute(
+  /^https:\/\/fonts\.gstatic\.com/,
+  workbox.strategies.cacheFirst({
+    cacheName: 'assets-cache',
+    plugins: [
+      new workbox.cacheableResponse.Plugin({
+        statuses: [0, 200],
+      }),
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+        maxEntries: 30,
+      }),
+    ],
+  })
+);
+
+workbox.routing.registerRoute(
+  /^https:\/\/cdnjs\.cloudflare\.com/,
+  workbox.strategies.cacheFirst({
+    cacheName: 'assets-cache',
+    plugins: [
+      new workbox.cacheableResponse.Plugin({
+        statuses: [0, 200],
+      }),
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+        maxEntries: 30,
+      }),
+    ],
+  })
 );

@@ -29,121 +29,46 @@
 
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <!--Import fontAwesome.css-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    
+  
     <!-- Import Materialize.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-
+    
     <link href="dist/css/prism.css" rel="stylesheet" />
     <link type="text/css" rel="stylesheet" href="dist/css/style-flat.css" />
     <link type="text/css" rel="stylesheet" href="dist/css/tsilang-editor.css" />
+
 </head>
 
 <body>
-
     <!--Header-->
     <nav class="z-depth-0 green nav-extended">
         <div class="container nav-wrapper">
-            <a href="index.html" class="brand-logo">TSilang Editor</a>
+            <a href="" class="brand-logo">TSilang Editor</a>
             <ul id="nav-mobile" class="right">
-                <li><a href="https://cumacoding.com" class="white-text hide-on-med-and-down">Home</a></li>
-                <li><a href="#!" onclick="$('#dialog-about').visible()"
-                        class="white-text hide-on-med-and-down">About</a></li>
+                <li><a href="https://cumacoding.com" class="white-text">Home</a></li>
+                <li><a href="#!" onclick="$('#dialog-about').visible()" class="white-text">About</a></li>
             </ul>
         </div>
     </nav>
-    <main style="padding-left: 0px; padding-top: 5px;">
+    <main style="padding-left: 0px;" id="app">
         <div class="container">
             <div class="row">
-                <div class="col s12 m6 l4">
-                    <table class="__table-tts-questions">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Question</th>
-                                <th>Answer</th>
-                                <th>Ops</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                <div class="col s12 l6">
+                    <div class="row __tts_tabs_levels">
+                        <div class="col s12">
+                            <ul class="tabs"></ul>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col s12 m6 l5">
+                <div class="col s12 l5">
                     <table class="__tts-grid" cellspacing="0" cellpadding="0"></table>
-                </div>
-
-                <div class="col s12 m12 l3">
-                    <div class="row">
-                        <p class="col s6">
-                            <input value="horizontal" name="orientation" class="with-gap" type="radio"
-                                id="horizontal" />
-                            <label for="horizontal">Horizontal</label>
-                        </p>
-                        <p class="col s6">
-                            <input value="vertical" name="orientation" class="with-gap" type="radio" id="vertical" />
-                            <label for="vertical">Vertical</label>
-                        </p>
-                    </div>
-
-                    <div class="row">
-                        <div class="col s6 input-field">
-                            <input id="row" type="number" class="validate">
-                            <label for="row">Row</label>
-                        </div>
-                        <div class="col s6 input-field">
-                            <input id="column" type="number" class="validate">
-                            <label for="column">Column</label>
-                        </div>
-                    </div>
-
-                    <div class="input-field">
-                        <input id="answer" type="text" class="validate">
-                        <label for="answer">Answer</label>
-                    </div>
-
-                    <div class="input-field">
-                        <input id="question" type="text" class="validate">
-                        <label for="question">Question</label>
-                    </div>
-                    <a class="button primary modal-trigger" id="done">Selesai</a>
-                    <a class="button accent" id="save">Simpan</a>
                 </div>
             </div>
         </div>
     </main>
-
-    <div class="__tts_menu right">
-        <div class="switch"></div>
-
-        <div class="button icon small" onClick="$('#dialog-categories').visible();">
-            <i class="icon-flat i-grid"></i>
-        </div>
-
-        <div class="button icon small">
-            <i class="icon-flat i-cog"></i>
-        </div>
-    </div>
-
-    <div id="dialog-categories" class="__tts_dialog">
-        <div class="header">
-            <span class="title">Categories</span>
-            <div class="buttons-right">
-                <i class="dialog-close icon-flat i-close small"></i>
-            </div>
-        </div>
-        <div class="content" style="padding: 0px;">
-            <div class="row __tts_tabs_levels" style="width: 580px; height: 450px; border-radius: 0px;">
-                <div class="col s12">
-                    <ul class="tabs"></ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer"></div>
-    </div>
 
     <div id="dialog-about" class="__tts_dialog">
         <div class="header">
@@ -211,7 +136,7 @@
         <div class="footer"></div>
     </div>
 
-    <form id="dialog-import" class="__tts_dialog">
+    <div id="dialog-import" class="__tts_dialog">
         <div class="header">
             <span class="title">Import</span>
             <div class="buttons-right">
@@ -234,7 +159,7 @@
             </p>
         </div>
         <div class="footer"></div>
-    </form>
+    </div>
 
     <form id="dialog-export" class="__tts_dialog">
         <div class="header">
@@ -293,7 +218,6 @@
     <!--Import Materialize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
-    <script type="text/javascript" src="dist/js/materialize.min.js"></script>
     <script type="text/javascript" src="dist/js/idb.js"></script>
     <script type="text/javascript" src="dist/js/prism.js"></script>
 
@@ -303,45 +227,13 @@
     <script type="text/javascript" src="dist/js/level-editor.js"></script>
     <script>
         $(document).ready(function () {
-            $('.__table-tts-questions tbody').matchHeight();
-
-            var id = parseInt(getUrlSearch('id'));
 
             var tsilang = new Tsilang({});
             tsilang.init();
-            if (id) {
-                tsilang.load(id);
-            } else if (column && row) {
-                tsilang.create(column, row);
-            }
 
-            $('#dialog-categories').dialog({
-                isMove: true,
-                isAutoClose: false,
-                show: function () {
-                    $('.__tts_tabs_levels .grid').delegate('.button:not(#add-level)', 'click',function () {
-                        let iid = $(this).find('span').data('id');
-                        if (id !== iid) {
-                            id = iid;
-                            let url = window.location.origin + window.location.pathname +
-                                '?id=' + id;
-                            history.pushState(id, null, url);
-                        }
-                    });
-                    if (id) {
-                        tsilang.setFocus(id);
-                    }
-                }
-            });
-            $('#dialog-about').dialog();
-            $('.__tts_menu.right').menu();
             $('.button').animClick();
-
-            $(window).bind('popstate', function (e) {
-                if (e.originalEvent.state) {
-                    tsilang.setFocus(e.originalEvent.state);
-                }
-            });
+            $('.__tts_menu.right').menu();
+            $('#dialog-about').dialog();
 
             $('#dialog-create-category').dialog({
                 isMove: true,
@@ -396,6 +288,7 @@
                 target: 'li.tab',
                 positionCurcor: true,
                 show: function (target) {
+                    console.log('ok');
                     $(this).find('#export').text('Export ' + $(target).text());
                     $(this).find('#delete').text('Delete Category ' + $(target).text());
                 }
@@ -497,6 +390,7 @@
                 isAutoClose: false
             }).initComponent(function () {
                 let $this = $(this);
+
                 function changeFile(params) {
                     if (/\.(java|json|kt|dt)$/i.test(this.files[0].name)) {
                         let type = this.files[0].name;
@@ -504,7 +398,7 @@
                         if (this.files && this.files[0]) {
                             var reader = new FileReader();
                             reader.onload = function (e) {
-                                let idAlert = Alert.loading('Memproses...');
+                                let idAlert = Alert.loading('Memproses...')
                                 tsilang.import(e.target.result, type, isDuplicate, () => {
                                     Alert.finish('Berhasil file di import!', idAlert);
                                     $this.gone();

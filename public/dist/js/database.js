@@ -55,16 +55,13 @@ const dbLevel = {
             });
         });
     },
-    find: (data, callback, callbackError) => {
+    find: (data, callback) => {
         dbLevel.getAll().then((values) => {
 			var find = values.find(value => (data.row_count === value.data.row_count &&
                 data.column_count === value.data.column_count &&
                 data.level === value.data.level));
-			if (typeof callback === "function" && find) {
+			if (typeof callback === "function") {
                 callback(find);
-            } else
-            if (typeof callbackError === "function" && !find) {
-                callbackError();
             }
 		});
     },
@@ -112,13 +109,13 @@ const dbCategory = {
             .objectStore('categories')
             .delete(id);
     },
-    find: (data, callback, callbackError) => {
+    find: (data, callback) => {
         dbCategory.getAll().then((values) => {
-            let find = values.find((value) => (data.row_count === value.data.row_count && data.column_count === value.data.column_count));
-            if (typeof callback === "function" && find) {
+            let find = values.find((value) => (
+                data.row_count === value.data.row_count && 
+                data.column_count === value.data.column_count));
+            if (typeof callback === "function") {
                 callback(find);
-            } else if (typeof callbackError === "function" && !find) {
-                callbackError();
             }
         });
     },
@@ -130,14 +127,13 @@ const dbCategory = {
             {'column_count': 12, 'row_count': 12},
         ];
         
-        dbCategory.getAll().then(result => {
-            dataCategories.forEach(value => {
-                var find = result.find(v => value.column_count === v.data.column_count && value.row_count === v.data.row_count);
+        dataCategories.forEach(value => {
+            dbCategory.find(value, () => {
                 if (!find) {
                     dbCategory.insert(value);
                 }
-            })
-        })
+            });
+        });
     }
 };
 dbCategory.init();

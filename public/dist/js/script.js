@@ -1,16 +1,17 @@
+'use strict';
 (function ($) {
     const rects = [];
 
     var constantX = (cursorX, target) => {
-        return (cursorX > $(target).position().left) && (cursorX < $(target).position().left + target.offsetWidth)
+        return (cursorX > target.getBoundingClientRect().left) && (cursorX < target.getBoundingClientRect().left + target.offsetWidth)
     }
     var constantY = (cursorY, target) => {
-        return (cursorY > $(target).position().top && cursorY < ($(target).position().top + target.offsetHeight))
+        return (cursorY > target.getBoundingClientRect().top && cursorY < (target.getBoundingClientRect().top + target.offsetHeight))
     }
 
     var constantRect = (target, target2) => {
-        if ($(target).position().left >= $(target2).position().left && ($(target).position().left + target.offsetWidth) <= ($(target2).position().left + target2.offsetWidth)) {
-            if ($(target).position().top >= $(target2).position().top && ($(target).position().top + target.offsetHeight) <= ($(target2).position().top + target2.offsetHeight)) {
+        if (target.getBoundingClientRect().left >= target2.getBoundingClientRect().left && (target.getBoundingClientRect().left + target.offsetWidth) <= (target2.getBoundingClientRect().left + target2.offsetWidth)) {
+            if (target.getBoundingClientRect().top >= target2.getBoundingClientRect().top && (target.getBoundingClientRect().top + target.offsetHeight) <= (target2.getBoundingClientRect().top + target2.offsetHeight)) {
                 return true;
             }
         }
@@ -27,13 +28,11 @@
             var rectObject = $(value.rectObject);
             var isClose = (typeof value.isAutoClose === "boolean") ? value.isAutoClose : true;
             if (rectObject.hasClass('visible') && isClose) {
-                var y = e.clientY + $(window).scrollTop();
-                var x = e.clientX + $(window).scrollLeft();
                 if (
-                    (!(x > rectObject.offset().left) ||
-                        !(x < rectObject.offset().left + rectObject.outerWidth())) ||
-                    (!(y > rectObject.offset().top) ||
-                        !(y < rectObject.offset().top + rectObject.outerHeight()))
+                    (!(e.clientX > rectObject[0].getBoundingClientRect().left) ||
+                        !(e.clientX < rectObject[0].getBoundingClientRect().left + rectObject.outerWidth())) ||
+                    (!(e.clientY > rectObject[0].getBoundingClientRect().top) ||
+                        !(e.clientY < rectObject[0].getBoundingClientRect().top + rectObject.outerHeight()))
                 ) {
                     rectObject.gone();
                 }
@@ -48,36 +47,39 @@
             }
         });
     });
+    $(document).scrollTop(function () {
+        let filter = rects.filter(v => v.type === 'context_menu');
+        filter.forEach(value => {
+            $(value.rectObject).gone();
+        });
+    });
 
     $(document).bind('contextmenu rightclick', function (e) {
         let filter = rects.filter(v => v.type === 'context_menu');
         var isShow = false;
 
         filter.forEach((value) => {
-            var y = e.clientY + $(window).scrollTop();
-            var x = e.clientX + $(window).scrollLeft();
+            var y = e.clientY;
+            var x = e.clientX;
             if (value.target) {
                 $(value.target).each(function () {
                     if (constantRect(e.target, this)) {
 
                         if (value.positionCurcor) {
-                            if ((x + $(value.rectObject).outerWidth() + 4) > window.innerWidth) {
-                                x = x - $(value.rectObject).outerWidth() - 4;
+                            if (x > (window.innerWidth - value.rectObject[0].offsetWidth - 4)) {
+                                x = x - value.rectObject[0].offsetWidth - 4;
                             }
-                            if (y + $(value.rectObject).outerHeight() > window.innerHeight) {
-                                y = y - $(value.rectObject).outerHeight();
-                            }
-                            
+
                             $(value.rectObject)
                                 .css('left', x)
                                 .css('top', y).visible();
                         } else {
-                            var left = ($(this).offset().left + $(this).outerWidth() + 4);
-                            var top = $(this).offset().top;
+                            var left = (this.getBoundingClientRect().left + $(this).outerWidth() + 4);
+                            var top = this.getBoundingClientRect().top;
                             if (left + $(value.rectObject).outerWidth() > window.innerWidth) {
                                 left = left - $(value.rectObject).outerWidth();
                             }
-                            if ((top + $(value.rectObject).outerHeight()) >window.innerHeight) {
+                            if ((top + $(value.rectObject).outerHeight()) > window.innerHeight) {
                                 top = top - $(value.rectObject).outerHeight();
                             }
                             $(value.rectObject).css('left', left).css('top', top).visible();
@@ -110,6 +112,10 @@
         var find = rects.find(v => v.rectObject[0] === this[0]);
         if (find) {
             if (typeof find.show === "function" && find.type !== 'context_menu') {
+                var z = rects.find(v => $(v.rectObject).hasClass('visible') && v !== find);
+                if (z) {
+                    $(this).css('z-index', (parseInt($(z.rectObject).css('z-index')) + 1));
+                }
                 find.show.apply(this);
             }
         }
@@ -208,14 +214,17 @@
     }
 
     $.fn.dialog = function (ops) {
-        var isMove = (typeof ops !== "undefined" && typeof ops.isMove === "boolean") ? ops.isMove : false;
-        var isAutoClose = (typeof ops !== "undefined" && typeof ops.isAutoClose === "boolean") ? ops.isAutoClose : true;
-
+        let defaultOps = {
+            isMove: (typeof ops !== "undefined") ? ops.isMove : false,
+            isAutoClose: (typeof ops !== "undefined") ? ops.isAutoClose : true,
+            show: (typeof ops !== "undefined") ? ops.show : null,
+            close: (typeof ops !== "undefined") ? ops.close : null,
+        }
         rects.push({
             type: 'dialog',
             rectObject: this,
             target: null,
-            isAutoClose: isAutoClose,
+            isAutoClose: defaultOps.isAutoClose,
             hide: (typeof ops !== "undefined") ? ops.hide : null,
             show: function () {
                 let left = ($(window).width() - $(this).outerWidth()) / 2;
@@ -228,7 +237,7 @@
                 if ((content.outerHeight() + header.outerHeight() + footer.outerHeight()) > $(window).height()) {
                     content.outerHeight($(window).height() - (header.outerHeight() + footer.outerHeight() + 8));
                 }
-                if (typeof ops !== "undefined" && typeof ops.show === "function") {
+                if (defaultOps.show) {
                     ops.show.apply(this);
                 }
             }
@@ -237,22 +246,29 @@
         const root = $(this);
         const close = $(this).find('.dialog-close');
         close.animClick(function () {
+            if (defaultOps.close) {
+                defaultOps.close.apply(root);
+            }
             root.gone();
         });
         const header = $(this).find('.header');
+
         header.mousedown(function (e) {
-            isDown = true;
-            if (isMove) {
+            if (defaultOps.isMove) {
+                isDown = true;
                 header.css('cursor', 'move');
+                positionStart = {
+                    x: e.clientX,
+                    y: e.clientY
+                }
             }
-            root.css('z-index', (parseInt(root.css('z-index')) + 2));
-            positionStart = {
-                x: e.clientX,
-                y: e.clientY
+            var z = rects.find(v => $(v.rectObject).hasClass('visible') && !$(v.rectObject).is(root));
+            if (z) {
+                root.css('z-index', (parseInt($(z.rectObject).css('z-index')) + 1));
             }
 
         });
-        if (isMove) {
+        if (defaultOps.isMove) {
             var isDown = false;
             var positionStart = {
                 x: 0,
@@ -273,7 +289,6 @@
                 if (isDown) {
                     header.css('cursor', 'default');
                     isDown = false;
-                    root.css('z-index', (parseInt() - 1));
                 }
             });
         }
@@ -291,11 +306,11 @@
     $.fn.matchHeight = function () {
         let $this = $(this);
         let top = $(this).position().top;
-        let height = $(window).innerHeight() - top -22;
+        let height = $(window).innerHeight() - top - 22;
         $(this).outerHeight(height);
         $(window).resize(function () {
             top = $this.position().top;
-            height = $(window).innerHeight() - top -22;
+            height = $(window).innerHeight() - top - 22;
             $this.outerHeight(height);
         });
     }
@@ -311,9 +326,9 @@ const Alert = {
         let id = this.loading(message);
         this.finish(message, id, durationLenght);
     },
-    loading: function(message) {
+    loading: function (message) {
         var id = createId();
-        let html = $('<div class="alert" id="'+id+'"><span>'+message+'</span></div>');
+        let html = $('<div class="alert" id="' + id + '"><span>' + message + '</span></div>');
         $(document.body).append(html);
         html.css('left', -html.width() + 'px');
         html.animate({
@@ -322,27 +337,40 @@ const Alert = {
         }, 200);
         return id;
     },
-    update: function(message, id)  {
-        $('#'+id).find('span').text(message);
+    update: function (message, id) {
+        $('#' + id).find('span').text(message);
     },
-    finish: function(message, id, durationLenght) {
-        $('#'+id).find('span').text(message);
+    finish: function (message, id, durationLenght) {
+        $('#' + id).find('span').text(message);
         setInterval(function () {
-            $('#'+id).animate({
+            $('#' + id).animate({
                 opacity: 0,
-                left: -$('#'+id).width()
+                left: -$('#' + id).width()
             }, 300, () => {
-                $('#'+id).remove();
+                $('#' + id).remove();
                 clearInterval(this);
             });
-        }, (typeof durationLenght === "number")? durationLenght : 6000);
+        }, (typeof durationLenght === "number") ? durationLenght : 6000);
     },
-    clear: function(id) {
-        $('#'+id).animate({
+    clear: function (id) {
+        $('#' + id).animate({
             opacity: 0,
-            left: -$('#'+id).width()
+            left: -$('#' + id).width()
         }, 300, () => {
-            $('#'+id).remove();
+            $('#' + id).remove();
         });
+    }
+}
+
+const getUrlSearch = function (id) {
+    let urlParams = new URLSearchParams(window.location.search);
+    if (typeof id === "string") {
+        return urlParams.get(id);
+    } else {
+        let data = {};
+        id.forEach((value) => {
+            data[value] = urlParams.get(value);
+        });
+        return data;
     }
 }
