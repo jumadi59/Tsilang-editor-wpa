@@ -32,7 +32,7 @@
 
     <!--Import fontAwesome.css-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    
+
     <!-- Import Materialize.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 
@@ -319,16 +319,18 @@
                 isMove: true,
                 isAutoClose: false,
                 show: function () {
-                    $('.__tts_tabs_levels .grid').delegate('.button:not(#add-level)', 'click',function () {
-                        let iid = $(this).find('span').data('id');
-                        if (id !== iid) {
-                            id = iid;
-                            let url = window.location.origin + window.location.pathname +
-                                '?id=' + id;
-                            history.pushState(id, null, url);
-                        }
-                    });
-                    if (id) {
+                    $('.__tts_tabs_levels .grid').delegate('.button:not(#add-level)', 'click',
+                        function () {
+                            let iid = $(this).find('span').data('id');
+                            if (id !== iid) {
+                                id = iid;
+                                let url = window.location.origin + window.location.pathname +
+                                    '?id=' + id;
+                                history.pushState(id, null, url);
+                            }
+                        });
+                    if (id !== parseInt(getUrlSearch('id'))) {
+                        id = parseInt(getUrlSearch('id'));
                         tsilang.setFocus(id);
                     }
                 }
@@ -367,8 +369,9 @@
                     $('#dialog-create-category').visible();
                 });
                 $(this).find('#export').click(function () {
-                    let id = parseInt($('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent().data(
-                        'id'));
+                    let id = parseInt($('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent()
+                        .data(
+                            'id'));
                     if (typeof id === "number") {
                         $this.gone();
                         $('#dialog-export').attr('data-id', id).visible();
@@ -380,8 +383,9 @@
                 });
 
                 $(this).find('#delete').click(() => {
-                    let id = parseInt($('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent().data(
-                        'id'));
+                    let id = parseInt($('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent()
+                        .data(
+                            'id'));
                     if (typeof id === "number") {
                         let idAlert = Alert.loading('Memproses..');
                         tsilang.removeCategory(parseInt(id), () => {
@@ -497,6 +501,7 @@
                 isAutoClose: false
             }).initComponent(function () {
                 let $this = $(this);
+
                 function changeFile(params) {
                     if (/\.(java|json|kt|dt)$/i.test(this.files[0].name)) {
                         let type = this.files[0].name;

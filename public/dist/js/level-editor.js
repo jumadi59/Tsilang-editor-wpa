@@ -403,20 +403,14 @@ const Tsilang = function (options) {
 		import: function (dataString, fileType, isDuplicate, callback) {
 			let data = JSON.parse(dataString);
 			data.forEach((value, i) => {
-				let dataSoal = {
-					'level': value.level,
-					'row_count': value.row_count,
-					'column_count': value.column_count,
-					'tsilang': value.tsilang
-				};
 				dbCategory.find({
 					'row_count': value.row_count,
 					'column_count': value.column_count
 				}, (result) => {
 					if (result) {
-						dbLevel.find(dataSoal, (r) => {
+						dbLevel.find(value, (r) => {
 							if (r && isDuplicate) {
-								dbLevel.update(dataSoal, r.id).then(() => {
+								dbLevel.update(value, r.id).then(() => {
 									if (i === data.length - 1) {
 										$('.__tts_tabs_levels').html('<div class="col s12"><ul class="tabs"></ul></div>');
 										callback();
@@ -424,7 +418,7 @@ const Tsilang = function (options) {
 									}
 								});
 							} else {
-								dbLevel.insert(dataSoal).then(() => {
+								dbLevel.insert(value).then(() => {
 									if (i === data.length - 1) {
 										$('.__tts_tabs_levels').html('<div class="col s12"><ul class="tabs"></ul></div>');
 										callback();
@@ -438,7 +432,7 @@ const Tsilang = function (options) {
 							'row_count': value.row_count,
 							'column_count': value.column_count
 						}).then(() => {
-							dbLevel.insert(dataSoal).then(() => {
+							dbLevel.insert(value).then(() => {
 								if (i === data.length - 1) {
 									$('.__tts_tabs_levels').html('<div class="col s12"><ul class="tabs"></ul></div>');
 									loadDb();

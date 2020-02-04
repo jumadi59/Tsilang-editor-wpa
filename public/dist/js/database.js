@@ -128,7 +128,7 @@ const dbCategory = {
         ];
         
         dataCategories.forEach(value => {
-            dbCategory.find(value, () => {
+            dbCategory.find(value, (find) => {
                 if (!find) {
                     dbCategory.insert(value);
                 }

@@ -64,13 +64,17 @@ const TtsEditor = function (options) {
             tableGrid.append(html);
             horizontal.prop("checked", true);
 
+            let maxWidth = tableGrid.parent().innerWidth();
             let width = tableGrid.width();
             let height = tableGrid.height();
+
             if (width > height) {
-                tableGrid.width(height + 42);
-            }
-            if (height > width) {
-                //tableGrid.height(width);
+                if ((height + 40) > maxWidth) {
+                    tableGrid.width(maxWidth-40);
+                    tableGrid.height(maxWidth);
+                } else {
+                    tableGrid.width(height);
+                }
             }
         },
 
@@ -212,8 +216,8 @@ const TtsEditor = function (options) {
 
                 var item = [this.editIndex + 1, question, answer];
                 var editIndex = this.editIndex;
-                
-                tablequestions.find('tr[data-id="'+(editIndex+1)+'"]').each(function (index) {
+
+                tablequestions.find('tr[data-id="' + (editIndex + 1) + '"]').each(function (index) {
                     if (index === 0) {
                         $(this).find('td').each(function (i) {
                             $(this).text(item[i]);
@@ -400,7 +404,7 @@ const TtsEditor = function (options) {
                 }
             }
 
-            tablequestions.find('tr[data-id="'+(id)+'"]').each(function (index) {
+            tablequestions.find('tr[data-id="' + (id) + '"]').each(function (index) {
                 if (index === 0) {
                     $(this).remove();
                 }
@@ -541,7 +545,7 @@ const TtsEditor = function (options) {
         }
     });
 
-    inputAnswer.keydown(function(evt) {
+    inputAnswer.keydown(function (evt) {
         if (evt.keyCode === 8 && $(this).val() === '') {
             inputColumn.focus();
         }
@@ -560,7 +564,7 @@ const TtsEditor = function (options) {
             tts.resetForm();
             inputRow.focus();
         }
-        
+
     });
 
     btnSave.animClick(function () {
