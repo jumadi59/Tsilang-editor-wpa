@@ -11,7 +11,7 @@ const VERTICAL = 'vertical';
 const TtsEditor = function (options) {
 
     var tableGrid = $('.__tts-grid');
-    var tablequestions = $('.__table-tts-questions tbody');
+    var tablequestions = $('.__table tbody');
     var horizontal = $('#horizontal');
     var vertical = $('#vertical');
     var inputRow = $('#row');

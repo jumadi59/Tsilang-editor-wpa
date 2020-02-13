@@ -20,6 +20,10 @@ workbox.precaching.precacheAndRoute([
     revision: '1'
   },
   {
+    url: '/docs/index.html',
+    revision: '1'
+  },
+  {
     url: '/tsilang-editor.html',
     revision: '1'
   },
@@ -39,7 +43,7 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-  /\.(?:css|js|woff|png|jpg|svg|gif)$/,
+  /\.(?:css|js|woff|png|jpg|svg|gif|html|json)$/,
   workbox.strategies.cacheFirst({
     cacheName: 'assets-cache',
   }),

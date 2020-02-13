@@ -314,6 +314,83 @@
         });
     }
 
+    $.fn.project = function (ops) {
+        let url = (typeof ops.url === "string")? ops.url : '';
+        let open = (typeof ops.open === "string")? ops.open.split('.') : null;
+        let isOpenAll = (typeof ops.openAll === "boolean")? ops.openAll : false;
+        let type = (typeof ops.type === "string")? ops.type : '';
+        $root = $(this);
+        $root.css('max-height', ($(window).height() - $root.offset().top) +'px');
+        $.ajax({
+            url: url,
+            success: function (data) {
+                $root.html(folder(data, 'project')).find('.name').click(
+            function () {
+                    let id = $(this).attr('id');
+                    $(this).toggleClass('open')
+                    $root.find('.folder[for="' + id + '"]').toggleClass('collapse');
+                });
+                openTarget();
+            }
+        });
+
+        function openTarget() {
+            var root = $root;
+            open.forEach((value, i) => {
+                var p = root.find('.folder[for*="fl-'+value+'-"]');
+                let id = p.attr('for');
+                $('#'+id).toggleClass('open');
+                p.removeClass('collapse');
+                root = p;
+            });
+        }
+
+        function folder(params, idd) {
+            let collapse = (isOpenAll || idd === 'project')? '' : 'collapse';
+            
+            var h = '<div class="folder '+collapse+'" for="fl-' + idd + '">';
+            for (const key in params) {
+                if (params.hasOwnProperty(key)) {
+                    const element = params[key];
+                    if (Array.isArray(element)) {
+                        h += file(element);
+                    } else {
+                        let id = key+'-'+createId();
+                        h += '<div class="name" id="fl-' + id +
+                            '"><i class="fa fa-folder"></i>' + key + '</div>';
+                        h += folder(element, id);
+                    }
+                }
+            }
+            h += '</div>';
+            return h;
+        }
+
+        function file(params) {
+            var h = '';
+            params.forEach(element => {
+                if (typeof element === "string") {
+                    h += '<div class="file"><i class="fa fa-file"></i>' +element + '</div>';
+                } else {
+                    h += '<div class="file" extesion="'+element.extesion+'" size="'+element.size+'"><i class="fa fa-file"></i>' +element.name + '</div>';
+                }
+            });
+            return h;
+        }
+    }
+
+    $.fn.app = function (param) { 
+        
+        function load(url, append) {
+            $.ajax({
+                url: url,
+                success: function (data) {
+                    $(append).html(data);
+                }
+            })
+        }
+     }
+
 })(jQuery);
 
 const createId = function () {
@@ -373,3 +450,5 @@ const getUrlSearch = function (id) {
         return data;
     }
 }
+
+const App = function (param) {  }

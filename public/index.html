@@ -31,10 +31,10 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import fontAwesome.css-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  
+
     <!-- Import Materialize.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    
+
     <link href="dist/css/prism.css" rel="stylesheet" />
     <link type="text/css" rel="stylesheet" href="dist/css/style-flat.css" />
     <link type="text/css" rel="stylesheet" href="dist/css/tsilang-editor.css" />
@@ -43,12 +43,13 @@
 
 <body>
     <!--Header-->
-    <nav class="z-depth-0 green nav-extended">
+    <nav class="z-depth-0 accent nav-extended">
         <div class="container nav-wrapper">
             <a href="" class="brand-logo">TSilang Editor</a>
-            <ul id="nav-mobile" class="right">
+            <ul class="right">
                 <li><a href="https://cumacoding.com" class="white-text">Home</a></li>
                 <li><a href="#!" onclick="$('#dialog-about').visible()" class="white-text">About</a></li>
+                <li><a href="docs/index.html"  class="white-text">Docs</a></li>
             </ul>
         </div>
     </nav>
@@ -91,6 +92,7 @@
                         class="fa fa-linkedin"></i></a>
                 <a class="button icon mini red" target="_blnk" href="mailto:jum4di59@gmail.com"><i
                         class="fa fa-envelope"></i></a>
+                <a class="button icon mini green" target="_blnk" href=""><i class="fa fa-whatsapp"></i></a>
             </div>
         </div>
         <div class="footer"></div>
@@ -259,8 +261,9 @@
                     $('#dialog-create-category').visible();
                 });
                 $(this).find('#export').click(function () {
-                    let id = parseInt($('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent().data(
-                        'id'));
+                    let id = parseInt($('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent()
+                        .data(
+                            'id'));
                     if (typeof id === "number") {
                         $this.gone();
                         $('#dialog-export').attr('data-id', id).visible();
@@ -272,8 +275,9 @@
                 });
 
                 $(this).find('#delete').click(() => {
-                    let id = parseInt($('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent().data(
-                        'id'));
+                    let id = parseInt($('.__tts_tabs_levels ul.tabs > li.tab > a.active').parent()
+                        .data(
+                            'id'));
                     if (typeof id === "number") {
                         let idAlert = Alert.loading('Memproses..');
                         tsilang.removeCategory(parseInt(id), () => {
@@ -432,14 +436,14 @@
             //
             // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
 
-            //try {
-            //  let app = firebase.app();
-            //  let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-            //  document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-            //} catch (e) {
-            //  console.error(e);
-            //  document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-            //}
+            try {
+                let app = firebase.app();
+                let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[
+                    feature] === 'function');
+                console.log(`Firebase SDK loaded with ${features.join(', ')}`);
+            } catch (e) {
+                console.error('Error loading the Firebase SDK, check the console.', e);
+            }
         });
     </script>
 </body>

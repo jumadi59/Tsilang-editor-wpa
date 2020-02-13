@@ -8,6 +8,9 @@
     --color-red: #e23e3e;
     --color-black: #2e2e2e;
     --color-blackDark: #111111;
+    --color-green: #2ed119;
+    --color-greenDark: #2db802;
+
 }
 
 @font-face {
@@ -74,6 +77,14 @@ html {
     background-color: var(--color-blackDark) !important;
 }
 
+.green {
+    background-color: var(--color-green) !important;
+}
+
+.green.dark {
+    background-color: var(--color-greenDark) !important;
+}
+
 /*----------------------------------------
     Display
 ------------------------------------------*/
@@ -123,6 +134,11 @@ html {
 
 .button.black {
     border-color: var(--color-blackDark);
+    color: #ffffff;
+}
+
+.button.green{
+    border-color: var(--color-greenDark);
     color: #ffffff;
 }
 
@@ -463,5 +479,62 @@ ul.__tts_context-menu > li:hover {
 
 .alert .loading {
 
+}
+
+.project {
+    line-height: 1.5;
+    font-family: "Roboto", sans-serif;
+    font-weight: normal;
+    display: block;
+    overflow: auto;
+}
+
+.project .folder {
+    margin-left: 15px;
+    margin-right: 4px;
+    width: max-content;
+}
+
+.project .name::before {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    margin-right: 4px;
+    content: '\f104';
+    width: 9px;
+}
+
+.project .name.open::before {
+    content: '\f107';
+}
+
+.project .file,
+.project .folder .name {
+    font-size: 13px;
+    cursor: pointer;
+    padding: 2px 4px;
+}
+
+.project .folder .name:hover {
+    background-color: #1111112a;
+}
+
+.project .file {
+    width: max-content;
+}
+
+.project .file:hover {
+    background-color: #1111112a;
+}
+
+.project .file > i,
+.project .folder .name > i {
+    margin-right: 4px;
+}
+
+.project .folder.collapse {
+    display: none;
 }
 

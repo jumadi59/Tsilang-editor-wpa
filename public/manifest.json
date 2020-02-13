@@ -6,7 +6,7 @@
     "start_url": "/index.html",
 	"display": "standalone",
 	"theme_color": "#04c7b7",
-    "icons": [
+    "icons": [{
         "src": "icons/icon-72x72.png",
         "sizes": "72x72",
         "type": "image/png"

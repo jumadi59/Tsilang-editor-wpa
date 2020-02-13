@@ -1,0 +1,179 @@
+<h5 class="title-page">Buttons</h5>
+<div class="row">
+    <div class="col l12">
+        <h6>Simple Xml</h6>
+        <pre><code class="language-xml">
+                        &lt;com.cumacoding.tekatekisilang.view.Buttons
+                            android:id="@+id/btn_keypad"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            app:drawableBox="@drawable/button_empty"
+                            app:drawableEmpty="@drawable/button_empty_stroke"
+                            app:typeFaceFromAsset="@string/font_name_dimbo_regular"
+                            app:boxTextAppearance="@style/ButtonsTextAppearance"
+                            app:isItemAnimTouchDownUp="true"
+                            app:itemDurationAnim="200"
+                            app:itemScaleAnim="0.8"
+                            app:isAutoWidthHeight="true"
+                            app:columns="5"
+                            app:rows="2"
+                            app:marginItem="2dp" /&gt;
+                </code></pre>
+        <br />
+        <table class="__table docs">
+            <thead>
+                <tr>
+                    <th>Xml</th>
+                    <th>type</th>
+                    <th>Programity</th>
+                    <th>type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody style="font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important;">
+                <tr>
+                    <td>app:drawableBox</td>
+                    <td>Reference</td>
+                    <td>setDrawableDefault(jshape)</td>
+                    <td>params JShape</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>app:drawableSelected</td>
+                    <td>Reference</td>
+                    <td>setDrawableSelect(jshape)</td>
+                    <td>params JShape</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>app:drawableEmpty</td>
+                    <td>Reference</td>
+                    <td>setDrawableEmpty(jshape)</td>
+                    <td>params JShape</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>app:boxTextAppearance</td>
+                    <td>Style</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>app:typeFaceFromAsset</td>
+                    <td>String</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>app:boxTextColorSelect</td>
+                    <td>Color</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>app:columns</td>
+                    <td>Integer</td>
+                    <td>setGrid(columnCount, rowCount)</td>
+                    <td>params Int, Int</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>app:rows</td>
+                    <td>Integer</td>
+                    <td>setGrid(columnCount, rowCount)</td>
+                    <td>params Int, Int</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>app:boxWidth</td>
+                    <td>Dimension</td>
+                    <td>boxWidth</td>
+                    <td>params Int, return Int</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>app:boxHeight</td>
+                    <td>Dimension</td>
+                    <td>boxHeight</td>
+                    <td>params Int, return Int</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>app:boxMaxWidth</td>
+                    <td>Dimension</td>
+                    <td>boxMaxWidth</td>
+                    <td>params Int, return Int</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>app:boxMaxHeight</td>
+                    <td>Dimension</td>
+                    <td>boxMaxHeight</td>
+                    <td>params Int, return Int</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>app:isAutoWidthHeight</td>
+                    <td>Boolean</td>
+                    <td>isAutoWidthHeight</td>
+                    <td>params Boolean
+                        return Boolean</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>app:isItemAnimTouchDownUp</td>
+                    <td>Boolean</td>
+                    <td>isItemAnimTouchDownUp</td>
+                    <td>params Boolean
+                        return Boolean</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>app:itemDurationAnim</td>
+                    <td>Integer</td>
+                    <td>duration</td>
+                    <td>params Integer
+                        return Integer</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>app:itemScaleAnim</td>
+                    <td>Float</td>
+                    <td>scaleAnim</td>
+                    <td>params Float
+                        return Float</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>app:textPadding</td>
+                    <td>String array</td>
+                    <td></td>
+                    <td>params</td>
+                    <td>Simple [2,2,4,3]</td>
+                </tr>
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>onItemClickListener</td>
+                    <td>params OnItemClickListener
+                        return OnItemClickListener or null</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>itemButtons</td>
+                    <td>params ArrayList&lt;ItemButton&gt;()
+                        return ArrayList&lt;ItemButton&gt;() or emptyList
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

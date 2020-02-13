@@ -44,13 +44,14 @@
 <body>
 
     <!--Header-->
-    <nav class="z-depth-0 green nav-extended">
+    <nav class="z-depth-0 accent nav-extended">
         <div class="container nav-wrapper">
             <a href="index.html" class="brand-logo">TSilang Editor</a>
-            <ul id="nav-mobile" class="right">
+            <ul class="right">
                 <li><a href="https://cumacoding.com" class="white-text hide-on-med-and-down">Home</a></li>
                 <li><a href="#!" onclick="$('#dialog-about').visible()"
                         class="white-text hide-on-med-and-down">About</a></li>
+                        <li><a href="docs/index.html"  class="white-text">Docs</a></li>
             </ul>
         </div>
     </nav>
@@ -58,7 +59,7 @@
         <div class="container">
             <div class="row">
                 <div class="col s12 m6 l4">
-                    <table class="__table-tts-questions">
+                    <table class="__table scroll number">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -166,6 +167,7 @@
                         class="fa fa-linkedin"></i></a>
                 <a class="button icon mini red" target="_blnk" href="mailto:jum4di59@gmail.com"><i
                         class="fa fa-envelope"></i></a>
+                <a class="button icon mini green" target="_blnk" href=""><i class="fa fa-whatsapp"></i></a>
             </div>
         </div>
         <div class="footer"></div>
@@ -303,7 +305,7 @@
     <script type="text/javascript" src="dist/js/level-editor.js"></script>
     <script>
         $(document).ready(function () {
-            $('.__table-tts-questions tbody').matchHeight();
+            $('.__table tbody').matchHeight();
 
             var id = parseInt(getUrlSearch('id'));
 
@@ -543,14 +545,14 @@
             //
             // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
 
-            //try {
-            //  let app = firebase.app();
-            //  let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-            //  document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-            //} catch (e) {
-            //  console.error(e);
-            //  document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-            //}
+            try {
+                let app = firebase.app();
+                let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[
+                    feature] === 'function');
+                console.log(`Firebase SDK loaded with ${features.join(', ')}`);
+            } catch (e) {
+                console.error('Error loading the Firebase SDK, check the console.', e);
+            }
         });
     </script>
 </body>
